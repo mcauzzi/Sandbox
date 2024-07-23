@@ -1,10 +1,17 @@
+using EfCoreContext;
+using Microsoft.EntityFrameworkCore;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-
+builder.Services.AddDbContext<SandboxContext>(x =>
+                                              {
+                                                  x.EnableSensitiveDataLogging();
+                                                  x.UseNpgsql("Host=localhost;Database=sandbox;Username=sandbox;Password=sandbox123");
+                                              });
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -16,30 +23,15 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-var summaries = new[]
-                {
-                    "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering",
-                    "Scorching"
-                };
 
-app.MapGet("/weatherforecast", () =>
+app.MapGet("/weatherforecast", (SandboxContext context) =>
                                {
-                                   var forecast = Enumerable.Range(1, 5)
-                                                            .Select(index =>
-                                                                        new
-                                                                            WeatherForecast(DateOnly.FromDateTime(DateTime.Now.AddDays(index)),
-                                                                             Random.Shared.Next(-20, 55),
-                                                                             summaries
-                                                                                 [Random.Shared.Next(summaries.Length)]))
-                                                            .ToArray();
+                                   var forecast = context.WeatherForecasts.OrderBy(x => Guid.NewGuid())
+                                                         .Take(10)
+                                                         .ToList();
                                    return forecast;
                                })
    .WithName("GetWeatherForecast")
    .WithOpenApi();
 
 app.Run();
-
-record WeatherForecast(DateOnly Date, int TemperatureC, string? Summary)
-{
-    public int TemperatureF => 32 + (int)(TemperatureC / 0.5556);
-}
