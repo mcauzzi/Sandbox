@@ -1,0 +1,8 @@
+@WebApiSandbox_HostAddress = http://localhost:5291
+
+GET {{WebApiSandbox_HostAddress}}/weatherforecast/
+
+
+Accept: application/json
+
+###

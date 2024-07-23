@@ -1,0 +1,21 @@
+# Use postgres/example user/password credentials
+
+services:
+
+  db:
+    image: postgres
+    restart: always
+    volumes:
+      - ./data:/var/lib/postgresql/data
+    ports:
+      - 5432:5432
+    environment:
+      POSTGRES_PASSWORD: sandbox123
+      POSTGRES_USER: sandbox
+
+
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - 8080:8080

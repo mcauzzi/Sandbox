@@ -1,0 +1,22 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebApiSandbox", "WebApiSandbox\WebApiSandbox.csproj", "{52610C1E-36BA-4AD4-B6C8-D0AA099E0F4B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EfCoreContext", "EfCoreContext\EfCoreContext.csproj", "{526F5AEB-703D-4913-A758-2E1485A2C28B}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{52610C1E-36BA-4AD4-B6C8-D0AA099E0F4B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{52610C1E-36BA-4AD4-B6C8-D0AA099E0F4B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{52610C1E-36BA-4AD4-B6C8-D0AA099E0F4B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{52610C1E-36BA-4AD4-B6C8-D0AA099E0F4B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{526F5AEB-703D-4913-A758-2E1485A2C28B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{526F5AEB-703D-4913-A758-2E1485A2C28B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{526F5AEB-703D-4913-A758-2E1485A2C28B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{526F5AEB-703D-4913-A758-2E1485A2C28B}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
