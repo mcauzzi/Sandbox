@@ -4,6 +4,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebApiSandbox", "WebApiSand
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EfCoreContext", "EfCoreContext\EfCoreContext.csproj", "{526F5AEB-703D-4913-A758-2E1485A2C28B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DbDataGenerator", "DbDataGenerator\DbDataGenerator.csproj", "{D64A52CA-5388-4102-A119-32090CA0F543}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -18,5 +20,9 @@ Global
 		{526F5AEB-703D-4913-A758-2E1485A2C28B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{526F5AEB-703D-4913-A758-2E1485A2C28B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{526F5AEB-703D-4913-A758-2E1485A2C28B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D64A52CA-5388-4102-A119-32090CA0F543}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D64A52CA-5388-4102-A119-32090CA0F543}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D64A52CA-5388-4102-A119-32090CA0F543}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D64A52CA-5388-4102-A119-32090CA0F543}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

@@ -51,7 +51,7 @@ namespace EfCoreContext.Migrations
 
                     b.HasIndex("State");
 
-                    b.ToTable("Cities");
+                    b.ToTable("Cities", (string)null);
                 });
 
             modelBuilder.Entity("EfCoreContext.Models.WeatherForecast", b =>
@@ -78,7 +78,7 @@ namespace EfCoreContext.Migrations
 
                     b.HasIndex("CityId");
 
-                    b.ToTable("WeatherForecasts");
+                    b.ToTable("WeatherForecasts", (string)null);
                 });
 
             modelBuilder.Entity("EfCoreContext.Models.WeatherForecast", b =>

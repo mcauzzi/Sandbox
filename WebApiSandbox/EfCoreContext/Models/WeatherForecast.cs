@@ -1,7 +1,9 @@
 using System.ComponentModel.DataAnnotations;
+using Microsoft.EntityFrameworkCore;
 
 namespace EfCoreContext.Models;
 
+[Index(nameof(Date))]
 public class WeatherForecast
 {
     [Key]
