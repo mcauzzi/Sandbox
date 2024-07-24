@@ -6,6 +6,14 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EfCoreContext", "EfCoreCont
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DbDataGenerator", "DbDataGenerator\DbDataGenerator.csproj", "{D64A52CA-5388-4102-A119-32090CA0F543}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebApiSandboxControllers", "WebApiSandboxControllers\WebApiSandboxControllers.csproj", "{842557F7-36D1-452C-8CE9-8B428CE0BAC8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebApiSandboxRepositories", "WebApiSandboxRepositories\WebApiSandboxRepositories.csproj", "{1C9046FB-FD08-411F-B1F3-5BC4D7CCFCFE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebApiSandboxRepositoryInterfaces", "WebApiSandboxRepositoryInterfaces\WebApiSandboxRepositoryInterfaces.csproj", "{4DB25D4C-B112-432E-B5C1-E0E1E10B9F62}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebApiSandboxViewModels", "WebApiSandboxViewModels\WebApiSandboxViewModels.csproj", "{96CE7B71-B364-46F7-895A-BC42289BEFDC}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -24,5 +32,21 @@ Global
 		{D64A52CA-5388-4102-A119-32090CA0F543}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D64A52CA-5388-4102-A119-32090CA0F543}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D64A52CA-5388-4102-A119-32090CA0F543}.Release|Any CPU.Build.0 = Release|Any CPU
+		{842557F7-36D1-452C-8CE9-8B428CE0BAC8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{842557F7-36D1-452C-8CE9-8B428CE0BAC8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{842557F7-36D1-452C-8CE9-8B428CE0BAC8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{842557F7-36D1-452C-8CE9-8B428CE0BAC8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1C9046FB-FD08-411F-B1F3-5BC4D7CCFCFE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1C9046FB-FD08-411F-B1F3-5BC4D7CCFCFE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1C9046FB-FD08-411F-B1F3-5BC4D7CCFCFE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1C9046FB-FD08-411F-B1F3-5BC4D7CCFCFE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4DB25D4C-B112-432E-B5C1-E0E1E10B9F62}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4DB25D4C-B112-432E-B5C1-E0E1E10B9F62}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4DB25D4C-B112-432E-B5C1-E0E1E10B9F62}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4DB25D4C-B112-432E-B5C1-E0E1E10B9F62}.Release|Any CPU.Build.0 = Release|Any CPU
+		{96CE7B71-B364-46F7-895A-BC42289BEFDC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{96CE7B71-B364-46F7-895A-BC42289BEFDC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{96CE7B71-B364-46F7-895A-BC42289BEFDC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{96CE7B71-B364-46F7-895A-BC42289BEFDC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

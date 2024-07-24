@@ -3,14 +3,25 @@ using Microsoft.EntityFrameworkCore;
 
 namespace EfCoreContext.Models;
 
-[Index(nameof(Date))]
+[Index(nameof(Date), nameof(CityId), IsUnique = true)]
 public class WeatherForecast
 {
     [Key]
-    public int Id { get;                set; }
-    public DateOnly Date         { get; set; }
-    public int      TemperatureC { get; set; }
-    public string?  Summary      { get; set; }
-    public int      CityId       { get; set; }
-    public City     City         { get; set; }
+    public long Id { get; set; }
+
+    public DateOnly       Date         { get; set; }
+    public decimal            TemperatureC { get; set; }
+    public WeatherSummary Summary      { get; set; }
+    public int            CityId       { get; set; }
+    public City?          City         { get; set; }
+}
+
+public enum WeatherSummary
+{
+    Sunny,
+    Cloudy,
+    Rainy,
+    Snowy,
+    Stormy,
+    Unknown = -1
 }

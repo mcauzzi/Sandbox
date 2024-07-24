@@ -3,6 +3,7 @@ using System;
 using EfCoreContext;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace EfCoreContext.Migrations
 {
     [DbContext(typeof(SandboxContext))]
-    partial class SandboxContextModelSnapshot : ModelSnapshot
+    [Migration("20240724185559_CountriesAndStates")]
+    partial class CountriesAndStates
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -46,7 +49,7 @@ namespace EfCoreContext.Migrations
 
                     b.HasIndex("StateId");
 
-                    b.ToTable("Cities", (string)null);
+                    b.ToTable("Cities");
                 });
 
             modelBuilder.Entity("EfCoreContext.Models.Country", b =>
@@ -67,7 +70,7 @@ namespace EfCoreContext.Migrations
                     b.HasIndex("Name")
                         .IsUnique();
 
-                    b.ToTable("Countries", (string)null);
+                    b.ToTable("Countries");
                 });
 
             modelBuilder.Entity("EfCoreContext.Models.State", b =>
@@ -90,7 +93,7 @@ namespace EfCoreContext.Migrations
 
                     b.HasIndex("CountryId");
 
-                    b.ToTable("States", (string)null);
+                    b.ToTable("States");
                 });
 
             modelBuilder.Entity("EfCoreContext.Models.WeatherForecast", b =>
@@ -111,8 +114,8 @@ namespace EfCoreContext.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<decimal>("TemperatureC")
-                        .HasColumnType("numeric");
+                    b.Property<int>("TemperatureC")
+                        .HasColumnType("integer");
 
                     b.HasKey("Id");
 
@@ -121,7 +124,7 @@ namespace EfCoreContext.Migrations
                     b.HasIndex("Date", "CityId")
                         .IsUnique();
 
-                    b.ToTable("WeatherForecasts", (string)null);
+                    b.ToTable("WeatherForecasts");
                 });
 
             modelBuilder.Entity("EfCoreContext.Models.City", b =>
