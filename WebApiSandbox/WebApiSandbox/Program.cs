@@ -10,7 +10,7 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<SandboxContext>(x =>
                                               {
                                                   x.EnableSensitiveDataLogging();
-                                                  x.UseNpgsql("Host=localhost;Database=sandbox;Username=sandbox;Password=sandbox123");
+                                                  x.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection"));
                                               });
 var app = builder.Build();
 
