@@ -1,19 +1,16 @@
 ﻿using EfCoreContext;
 using EfCoreContext.Models;
 using Microsoft.EntityFrameworkCore;
+using RepositoriesExceptions;
 using WebApiSandboxRepositoryInterfaces;
 using WebApiSandboxViewModels;
 
 namespace WebApiSandboxRepositories;
 
-public class ForecastRepository:IForecastsRepository
+public class ForecastRepository(SandboxContext context) : IForecastsRepository
 {
-    public SandboxContext Context { get; }
+    private SandboxContext Context { get; } = context;
 
-    public ForecastRepository(SandboxContext context)
-    {
-        Context = context;
-    }
     public async Task<IEnumerable<ForecastViewModel>> Get(int rows, int offset)
     {
         return await Context.WeatherForecasts
@@ -79,5 +76,24 @@ public class ForecastRepository:IForecastsRepository
                                               Summary     = wf.Summary.ToString(),
                                               Date        = wf.Date
                                           }).ToListAsync();
+    }
+    
+    public async Task Add(ForecastViewModel forecast)
+    {
+        var city = await Context.Cities
+                               .Include(x=>x.State)
+                               .ThenInclude(x=>x.Country)
+                               .FirstOrDefaultAsync(x => x.Name == forecast.CityName);
+        if (city == null)
+        {
+            throw new NotFoundException(city.GetType().Name, forecast.CityName);
+        }
+        await Context.WeatherForecasts.AddAsync(new WeatherForecast
+        {
+            City    = city,
+            Summary = Enum.Parse<WeatherSummary>(forecast.Summary),
+            Date    = forecast.Date
+        });
+        await Context.SaveChangesAsync();
     }
 }

@@ -8,6 +8,7 @@
 
     <ItemGroup>
       <ProjectReference Include="..\EfCoreContext\EfCoreContext.csproj" />
+      <ProjectReference Include="..\RepositoriesExceptions\RepositoriesExceptions.csproj" />
       <ProjectReference Include="..\WebApiSandboxRepositoryInterfaces\WebApiSandboxRepositoryInterfaces.csproj" />
     </ItemGroup>
 

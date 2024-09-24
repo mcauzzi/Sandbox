@@ -1,9 +1,11 @@
 ﻿using EfCoreContext.Models;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace EfCoreContext;
 
-public class SandboxContext : DbContext
+public class SandboxContext : IdentityDbContext<IdentityUser, IdentityRole, string>
 {
     public SandboxContext(DbContextOptions<SandboxContext> options) : base(options)
     {
@@ -28,6 +30,7 @@ public class SandboxContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+        base.OnModelCreating(modelBuilder);
         //modelBuilder.HasPostgresEnum<WeatherSummary>();
         modelBuilder
             .Entity<WeatherForecast>()

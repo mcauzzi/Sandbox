@@ -14,6 +14,14 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebApiSandboxRepositoryInte
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebApiSandboxViewModels", "WebApiSandboxViewModels\WebApiSandboxViewModels.csproj", "{96CE7B71-B364-46F7-895A-BC42289BEFDC}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RepositoriesExceptions", "RepositoriesExceptions\RepositoriesExceptions.csproj", "{A6875F45-CFBB-4294-A586-2817AA867DF2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SandboxAuthentication", "SandboxAuthentication\SandboxAuthentication.csproj", "{BADB01C3-3119-4584-9950-2F9F8BC88BA4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SandboxAuthenticationInterfaces", "SandboxAuthenticationInterfaces\SandboxAuthenticationInterfaces.csproj", "{968BE819-43B7-4045-9FF8-647092DD6879}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SandboxConfigurations", "SandboxConfigurations\SandboxConfigurations.csproj", "{C215610A-E8BB-4827-8BAA-6EF4BFECC0C2}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -48,5 +56,21 @@ Global
 		{96CE7B71-B364-46F7-895A-BC42289BEFDC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{96CE7B71-B364-46F7-895A-BC42289BEFDC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{96CE7B71-B364-46F7-895A-BC42289BEFDC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A6875F45-CFBB-4294-A586-2817AA867DF2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A6875F45-CFBB-4294-A586-2817AA867DF2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A6875F45-CFBB-4294-A586-2817AA867DF2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A6875F45-CFBB-4294-A586-2817AA867DF2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BADB01C3-3119-4584-9950-2F9F8BC88BA4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BADB01C3-3119-4584-9950-2F9F8BC88BA4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BADB01C3-3119-4584-9950-2F9F8BC88BA4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BADB01C3-3119-4584-9950-2F9F8BC88BA4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{968BE819-43B7-4045-9FF8-647092DD6879}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{968BE819-43B7-4045-9FF8-647092DD6879}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{968BE819-43B7-4045-9FF8-647092DD6879}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{968BE819-43B7-4045-9FF8-647092DD6879}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C215610A-E8BB-4827-8BAA-6EF4BFECC0C2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C215610A-E8BB-4827-8BAA-6EF4BFECC0C2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C215610A-E8BB-4827-8BAA-6EF4BFECC0C2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C215610A-E8BB-4827-8BAA-6EF4BFECC0C2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

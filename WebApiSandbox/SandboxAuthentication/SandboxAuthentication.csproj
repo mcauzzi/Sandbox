@@ -5,13 +5,15 @@
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
     </PropertyGroup>
+
     <ItemGroup>
-        <FrameworkReference Include="Microsoft.AspNetCore.App" />
+      <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="8.0.8" />
     </ItemGroup>
+
     <ItemGroup>
-      <ProjectReference Include="..\RepositoriesExceptions\RepositoriesExceptions.csproj" />
+      <ProjectReference Include="..\EfCoreContext\EfCoreContext.csproj" />
       <ProjectReference Include="..\SandboxAuthenticationInterfaces\SandboxAuthenticationInterfaces.csproj" />
-      <ProjectReference Include="..\WebApiSandboxRepositoryInterfaces\WebApiSandboxRepositoryInterfaces.csproj" />
+      <ProjectReference Include="..\SandboxConfigurations\SandboxConfigurations.csproj" />
     </ItemGroup>
 
 </Project>
