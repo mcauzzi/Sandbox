@@ -7,7 +7,7 @@ using WebApiSandboxViewModels;
 namespace WebApiSandboxControllers;
 
 [ApiController]
-[Authorize(Roles ="Users" )]
+[Authorize(Roles ="User" )]
 [Route("[controller]", Name = "WeatherForecast")]
 public class WeatherForecastController:Controller
 {
@@ -44,7 +44,7 @@ public class WeatherForecastController:Controller
     }
     
     [HttpPost]
-    [Authorize(Roles ="Admins" )]
+    [Authorize(Roles ="Admin" )]
     public async Task<IActionResult> Post([FromBody] ForecastViewModel forecast)
     {
         try

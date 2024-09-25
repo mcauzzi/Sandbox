@@ -11,7 +11,7 @@ public class SecretsProvider:ISecretsProvider
     {
         _configuration = configuration.Value;
     }
-    public string GetSymmetricKey => _configuration.SymmetricKey;
+    public string SymmetricKey => _configuration.SymmetricKey;
     public string GetIssuer => _configuration.Issuer;
     public string GetAudience => _configuration.Audience;
 }

@@ -34,11 +34,27 @@ public class AuthController : ControllerBase
         var user = await _userManager.FindByNameAsync(model.Username);
         if (user != null && await _userManager.CheckPasswordAsync(user, model.Password))
         {
-            var token = _tokenService.GenerateToken(user.UserName);
+            var roles = await _userManager.GetRolesAsync(user);
+            var token = _tokenService.GenerateToken(user.UserName,roles);
             return Ok(new { Token = token });
         }
 
         return Unauthorized();
+    }
+    [HttpPost("assign-role")]
+    public async Task<IActionResult> AssignRole([FromBody] AssignRoleViewModel model)
+    {
+        var user = await _userManager.FindByNameAsync(model.Username);
+        if (user != null)
+        {
+            var result = await _userManager.AddToRoleAsync(user, model.Role);
+            if (result.Succeeded)
+            {
+                return Ok();
+            }
+            return BadRequest(result.Errors);
+        }
+        return NotFound();
     }
     
     private readonly UserManager<IdentityUser> _userManager;

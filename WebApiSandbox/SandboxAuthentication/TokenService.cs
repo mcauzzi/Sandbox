@@ -17,21 +17,19 @@ public class TokenService:ITokenService
         Context              = context;
         SecretsProvider = secretsProvider;
     }
-    public string GenerateToken(string username)
+    public string GenerateToken(string username, IList<string> roles)
     {
-        var claims = new[]
+        var claims = new List<Claim>
                      {
-                         new Claim(JwtRegisteredClaimNames.Sub, username),
-                         new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
+                         new(JwtRegisteredClaimNames.Sub, username),
+                         new(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
                      };
-
-        var key   = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(SecretsProvider.GetSymmetricKey));
+        claims.AddRange(roles.Select(role => new Claim(ClaimTypes.Role, role)));
+        var key   = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(SecretsProvider.SymmetricKey));
         var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
 
-        var token = new JwtSecurityToken(issuer: SecretsProvider.GetIssuer,
-                                         audience: SecretsProvider.GetAudience,
-                                         claims: claims,
-                                         expires: DateTime.Now.AddMinutes(30),
+        var token = new JwtSecurityToken(issuer: SecretsProvider.GetIssuer, audience: SecretsProvider.GetAudience,
+                                         claims: claims, expires: DateTime.UtcNow.AddMinutes(30),
                                          signingCredentials: creds);
 
         return new JwtSecurityTokenHandler().WriteToken(token);

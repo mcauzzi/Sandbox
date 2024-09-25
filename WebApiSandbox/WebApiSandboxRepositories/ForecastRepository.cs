@@ -86,7 +86,7 @@ public class ForecastRepository(SandboxContext context) : IForecastsRepository
                                .FirstOrDefaultAsync(x => x.Name == forecast.CityName);
         if (city == null)
         {
-            throw new NotFoundException(city.GetType().Name, forecast.CityName);
+            throw new NotFoundException(nameof(City), forecast.CityName);
         }
         await Context.WeatherForecasts.AddAsync(new WeatherForecast
         {

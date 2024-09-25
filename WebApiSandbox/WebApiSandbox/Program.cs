@@ -3,7 +3,9 @@ using EfCoreContext;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.OpenApi.Models;
 using SandboxAuthentication;
 using SandboxAuthenticationInterfaces;
 using SandboxConfigurations;
@@ -17,7 +19,34 @@ var builder = WebApplication.CreateBuilder(args);
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.Configure<AuthConfig>(builder.Configuration.GetSection(nameof(AuthConfig)));
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services.AddSwaggerGen(c =>
+                               {
+                                   c.SwaggerDoc("v1", new OpenApiInfo { Title = "Your API", Version = "v1" });
+                                   c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+                                                                     {
+                                                                         In = ParameterLocation.Header,
+                                                                         Description =
+                                                                             "Please enter into field the word 'Bearer' followed by a space and the JWT value",
+                                                                         Name   = "Authorization",
+                                                                         Type   = SecuritySchemeType.ApiKey,
+                                                                         Scheme = "Bearer"
+                                                                     });
+                                   c.AddSecurityRequirement(new OpenApiSecurityRequirement
+                                                            {
+                                                                {
+                                                                    new OpenApiSecurityScheme
+                                                                    {
+                                                                        Reference = new OpenApiReference
+                                                                            {
+                                                                                Type = ReferenceType
+                                                                                    .SecurityScheme,
+                                                                                Id = "Bearer"
+                                                                            }
+                                                                    },
+                                                                    new string[] { }
+                                                                }
+                                                            });
+                               });
 builder.Services.AddScoped<IForecastsRepository, ForecastRepository>();
 builder.Services.AddControllers()
        .AddApplicationPart(typeof(WeatherForecastController).Assembly)
@@ -38,20 +67,33 @@ builder.Services.AddAuthentication(options =>
                                    })
        .AddJwtBearer(options =>
                      {
+                         options.IncludeErrorDetails = true;
                          options.TokenValidationParameters = new TokenValidationParameters
                                                              {
-                                                                 ValidateIssuer = true,
-                                                                 ValidateAudience = true,
-                                                                 ValidateLifetime = true,
+                                                                 ValidateIssuer           = true,
+                                                                 ValidateAudience         = true,
+                                                                 ValidateLifetime         = true,
                                                                  ValidateIssuerSigningKey = true,
-                                                                 ValidIssuer = "Sandbox",
-                                                                 ValidAudience = "Audience",
-                                                                 IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("yourSecretKey"))
+                                                                 ValidIssuer              = "SandboxApi",
+                                                                 ValidAudience            = "SandboxClient",
+                                                                 IssuerSigningKey =
+                                                                     new SymmetricSecurityKey(Encoding.UTF8
+                                                                         .GetBytes("zC8vVKxMAraTYlxRI3tXVi17lWv24UZLD081L7hdObY="))
                                                              };
                      });
 builder.Services.AddScoped<ISecretsProvider, SecretsProvider>();
 builder.Services.AddScoped<ITokenService, TokenService>();
+builder.Services.AddAuthorizationBuilder()
+    .AddPolicy("Users", policy => policy.RequireRole("Users"))
+    .AddPolicy("Admin", policy => policy.RequireRole("Admin"));
 var app = builder.Build();
+// Create roles if they don't exist
+using (var scope = app.Services.CreateScope())
+{
+    var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+    var userManager = scope.ServiceProvider.GetRequiredService<UserManager<IdentityUser>>();
+    await AuthInitializer.Initialize(roleManager, userManager);
+}
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
