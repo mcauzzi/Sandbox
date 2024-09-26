@@ -18,7 +18,10 @@ public class City
 
     [StringLength(1000)]
     public string? Description { get; set; }
-    public State? State { get; set; }
+    public decimal Latitude  { get;   set; }
+    public decimal Longitude { get;   set; }
+    public State?  State     { get;   set; }
 
     public HashSet<WeatherForecast> WeatherForecasts { get; set; } = new();
+  
 }

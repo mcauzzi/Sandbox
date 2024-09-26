@@ -16,6 +16,9 @@
       <ProjectReference Include="..\EfCoreContext\EfCoreContext.csproj" />
       <ProjectReference Include="..\SandboxAuthentication\SandboxAuthentication.csproj" />
       <ProjectReference Include="..\SandboxConfigurations\SandboxConfigurations.csproj" />
+      <ProjectReference Include="..\SandboxRemoteApisInterfaces\SandboxRemoteApisInterfaces.csproj" />
+      <ProjectReference Include="..\SandboxRemoteApisRepositories\SandboxRemoteApisRepositories.csproj" />
+      <ProjectReference Include="..\SandboxServices\SandboxServices.csproj" />
       <ProjectReference Include="..\WebApiSandboxControllers\WebApiSandboxControllers.csproj" />
       <ProjectReference Include="..\WebApiSandboxRepositories\WebApiSandboxRepositories.csproj" />
     </ItemGroup>

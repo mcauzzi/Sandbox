@@ -23,6 +23,7 @@ public class ForecastRepository(SandboxContext context) : IForecastsRepository
                           StateName   = wf.City.State.Name,
                           CountryName = wf.City.State.Country.Name,
                           Summary     = wf.Summary.ToString(),
+                          Temperature = wf.TemperatureC,
                           Date        = wf.Date
                       }).ToListAsync();
     }
@@ -40,6 +41,7 @@ public class ForecastRepository(SandboxContext context) : IForecastsRepository
                                               StateName   = wf.City.State.Name,
                                               CountryName = wf.City.State.Country.Name,
                                               Summary     = wf.Summary.ToString(),
+                                              Temperature = wf.TemperatureC,
                                               Date        = wf.Date
                                           }).ToListAsync();
     }
@@ -57,6 +59,7 @@ public class ForecastRepository(SandboxContext context) : IForecastsRepository
                                               StateName   = wf.City.State.Name,
                                               CountryName = wf.City.State.Country.Name,
                                               Summary     = wf.Summary.ToString(),
+                                              Temperature = wf.TemperatureC,
                                               Date        = wf.Date
                                           }).ToListAsync();
     }
@@ -64,7 +67,7 @@ public class ForecastRepository(SandboxContext context) : IForecastsRepository
     public async Task<IEnumerable<ForecastViewModel>> GetBySummary(string summary, int rows, int offset)
     {
         return await Context.WeatherForecasts
-                            .Where(x=>x.Summary==Enum.Parse<WeatherSummary>(summary))
+                            .Where(x=>x.Summary==Enum.Parse<WeatherWmoCode>(summary))
                             .OrderBy(x=>x.Id)
                             .Skip(offset)
                             .Take(rows)
@@ -74,6 +77,7 @@ public class ForecastRepository(SandboxContext context) : IForecastsRepository
                                               StateName   = wf.City.State.Name,
                                               CountryName = wf.City.State.Country.Name,
                                               Summary     = wf.Summary.ToString(),
+                                              Temperature = wf.TemperatureC,
                                               Date        = wf.Date
                                           }).ToListAsync();
     }
@@ -91,7 +95,8 @@ public class ForecastRepository(SandboxContext context) : IForecastsRepository
         await Context.WeatherForecasts.AddAsync(new WeatherForecast
         {
             City    = city,
-            Summary = Enum.Parse<WeatherSummary>(forecast.Summary),
+            Summary = Enum.Parse<WeatherWmoCode>(forecast.Summary),
+            TemperatureC = forecast.Temperature,
             Date    = forecast.Date
         });
         await Context.SaveChangesAsync();

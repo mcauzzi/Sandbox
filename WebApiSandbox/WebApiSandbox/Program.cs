@@ -9,6 +9,9 @@ using Microsoft.OpenApi.Models;
 using SandboxAuthentication;
 using SandboxAuthenticationInterfaces;
 using SandboxConfigurations;
+using SandboxRemoteApisInterfaces;
+using SandboxRemoteApisRepositories;
+using SandboxServices;
 using WebApiSandboxControllers;
 using WebApiSandboxRepositories;
 using WebApiSandboxRepositoryInterfaces;
@@ -18,6 +21,7 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.Configure<AuthConfig>(builder.Configuration.GetSection(nameof(AuthConfig)));
+builder.Services.Configure<OpenMeteoImporterConfig>(builder.Configuration.GetSection(nameof(OpenMeteoImporterConfig)));
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(c =>
                                {
@@ -83,6 +87,9 @@ builder.Services.AddAuthentication(options =>
                      });
 builder.Services.AddScoped<ISecretsProvider, SecretsProvider>();
 builder.Services.AddScoped<ITokenService, TokenService>();
+builder.Services.AddScoped<IWeatherImport, OpenMeteoImporter>();
+builder.Services.AddHostedService<WeatherDataImporter>();
+builder.Services.AddHttpClient<IWeatherImport, OpenMeteoImporter>();
 builder.Services.AddAuthorizationBuilder()
     .AddPolicy("Users", policy => policy.RequireRole("Users"))
     .AddPolicy("Admin", policy => policy.RequireRole("Admin"));

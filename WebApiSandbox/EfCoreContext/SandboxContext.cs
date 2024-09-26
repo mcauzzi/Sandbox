@@ -37,7 +37,7 @@ public class SandboxContext : IdentityDbContext<IdentityUser, IdentityRole, stri
             .Property(e => e.Summary)
             .HasConversion(
                            v => v.ToString(),
-                           v => (WeatherSummary)Enum.Parse(typeof(WeatherSummary), v));
+                           v => (WeatherWmoCode)Enum.Parse(typeof(WeatherWmoCode), v));
         //modelBuilder.Entity<WeatherForecast>().Property(wf => wf.Summary).HasConversion<int>();
     }
 }
