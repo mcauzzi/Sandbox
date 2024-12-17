@@ -50,6 +50,7 @@ builder.Services.AddSwaggerGen(c =>
                                                                     new string[] { }
                                                                 }
                                                             });
+                                   c.SwaggerDoc("v2", new OpenApiInfo { Title = "Your API", Version = "v2" });
                                });
 builder.Services.AddScoped<IForecastsRepository, ForecastRepository>();
 builder.Services.AddControllers()
@@ -93,6 +94,17 @@ builder.Services.AddHttpClient<IWeatherImport, OpenMeteoImporter>();
 builder.Services.AddAuthorizationBuilder()
     .AddPolicy("Users", policy => policy.RequireRole("Users"))
     .AddPolicy("Admin", policy => policy.RequireRole("Admin"));
+builder.Services.AddApiVersioning(options =>
+                                  {
+                                      options.AssumeDefaultVersionWhenUnspecified = true;
+                                      options.DefaultApiVersion                   = new ApiVersion(1, 0);
+                                      options.ReportApiVersions                    = true;
+                                  });
+builder.Services.AddVersionedApiExplorer(options =>
+                                         {
+                                             options.GroupNameFormat           = "'v'VVV";
+                                             options.SubstituteApiVersionInUrl = true;
+                                         });
 var app = builder.Build();
 // Create roles if they don't exist
 using (var scope = app.Services.CreateScope())

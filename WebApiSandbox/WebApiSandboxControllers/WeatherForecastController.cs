@@ -9,6 +9,8 @@ namespace WebApiSandboxControllers;
 [ApiController]
 [Authorize(Roles ="User" )]
 [Route("[controller]", Name = "WeatherForecast")]
+[ApiVersion("1.0")]
+[ApiVersion("2.0")]
 public class WeatherForecastController:Controller
 {
     public IForecastsRepository Repository { get; }
