@@ -15,6 +15,7 @@ using SandboxServices;
 using WebApiSandboxControllers;
 using WebApiSandboxRepositories;
 using WebApiSandboxRepositoryInterfaces;
+using Microsoft.AspNetCore.Mvc.Versioning;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -50,6 +51,15 @@ builder.Services.AddSwaggerGen(c =>
                                                                     new string[] { }
                                                                 }
                                                             });
+                                   c.DocInclusionPredicate((version, desc) =>
+                                   {
+                                       if (!desc.TryGetMethodInfo(out var methodInfo)) return false;
+                                       var versions = methodInfo.DeclaringType
+                                           .GetCustomAttributes(true)
+                                           .OfType<ApiVersionAttribute>()
+                                           .SelectMany(attr => attr.Versions);
+                                       return versions.Any(v => $"v{v}" == version);
+                                   });
                                });
 builder.Services.AddScoped<IForecastsRepository, ForecastRepository>();
 builder.Services.AddControllers()
@@ -93,6 +103,13 @@ builder.Services.AddHttpClient<IWeatherImport, OpenMeteoImporter>();
 builder.Services.AddAuthorizationBuilder()
     .AddPolicy("Users", policy => policy.RequireRole("Users"))
     .AddPolicy("Admin", policy => policy.RequireRole("Admin"));
+builder.Services.AddApiVersioning(options =>
+{
+    options.DefaultApiVersion = new ApiVersion(1, 0);
+    options.AssumeDefaultVersionWhenUnspecified = true;
+    options.ReportApiVersions = true;
+    options.ApiVersionReader = new HeaderApiVersionReader("x-api-version");
+});
 var app = builder.Build();
 // Create roles if they don't exist
 using (var scope = app.Services.CreateScope())

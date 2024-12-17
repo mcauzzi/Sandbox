@@ -7,6 +7,7 @@ namespace WebApiSandboxControllers;
 
 [ApiController]
 [Route("[controller]")]
+[ApiVersion("1.0")]
 public class AuthController : ControllerBase
 {
     public AuthController(UserManager<IdentityUser> userManager, ITokenService tokenService)
