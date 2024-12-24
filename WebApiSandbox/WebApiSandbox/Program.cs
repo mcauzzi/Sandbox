@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using SandboxAuthentication;
 using SandboxAuthenticationInterfaces;
@@ -17,12 +18,13 @@ using WebApiSandboxRepositories;
 using WebApiSandboxRepositoryInterfaces;
 
 var builder = WebApplication.CreateBuilder(args);
-
+builder.AddSerilogDefaultConfig();
 // Add services to the container.
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.Configure<AuthConfig>(builder.Configuration.GetSection(nameof(AuthConfig)));
 builder.Services.Configure<OpenMeteoImporterConfig>(builder.Configuration.GetSection(nameof(OpenMeteoImporterConfig)));
 builder.Services.AddEndpointsApiExplorer();
+
 builder.Services.AddSwaggerGen(c =>
                                {
                                    c.SwaggerDoc("v1", new OpenApiInfo { Title = "Your API", Version = "v1" });
@@ -55,12 +57,8 @@ builder.Services.AddScoped<IForecastsRepository, ForecastRepository>();
 builder.Services.AddControllers()
        .AddApplicationPart(typeof(WeatherForecastController).Assembly)
        .AddControllersAsServices();
-builder.Services.AddDbContext<SandboxContext>(x =>
-                                              {
-                                                  x.EnableSensitiveDataLogging();
-                                                  x.UseNpgsql(builder.Configuration
-                                                                     .GetConnectionString("DefaultConnection"));
-                                              });
+builder.AddServiceDefaults();
+builder.AddNpgsqlDbContext<SandboxContext>(connectionName: "WeatherDb");
 builder.Services.AddIdentity<IdentityUser, IdentityRole>()
        .AddEntityFrameworkStores<SandboxContext>()
        .AddDefaultTokenProviders();
