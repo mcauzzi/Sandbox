@@ -1,26 +1,29 @@
 <Project Sdk="Microsoft.NET.Sdk.Web">
 
     <PropertyGroup>
-        <TargetFramework>net8.0</TargetFramework>
+        <TargetFramework>net9.0</TargetFramework>
         <Nullable>enable</Nullable>
         <ImplicitUsings>enable</ImplicitUsings>
+        <IsAspireSharedProject>true</IsAspireSharedProject>
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="8.0.8" />
-        <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="8.0.4" />
-        <PackageReference Include="Swashbuckle.AspNetCore" Version="6.8.0" />
+        <PackageReference Include="Aspire.Npgsql.EntityFrameworkCore.PostgreSQL" Version="9.0.0" />
+        <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="9.0.0" />
+        <PackageReference Include="Swashbuckle.AspNetCore" Version="7.2.0" />
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\EfCoreContext\EfCoreContext.csproj" />
-      <ProjectReference Include="..\SandboxAuthentication\SandboxAuthentication.csproj" />
-      <ProjectReference Include="..\SandboxConfigurations\SandboxConfigurations.csproj" />
-      <ProjectReference Include="..\SandboxRemoteApisInterfaces\SandboxRemoteApisInterfaces.csproj" />
-      <ProjectReference Include="..\SandboxRemoteApisRepositories\SandboxRemoteApisRepositories.csproj" />
-      <ProjectReference Include="..\SandboxServices\SandboxServices.csproj" />
-      <ProjectReference Include="..\WebApiSandboxControllers\WebApiSandboxControllers.csproj" />
-      <ProjectReference Include="..\WebApiSandboxRepositories\WebApiSandboxRepositories.csproj" />
+        <FrameworkReference Include="Microsoft.AspNetCore.App" />
+        <ProjectReference Include="..\EfCoreContext\EfCoreContext.csproj" />
+        <ProjectReference Include="..\SandboxAspireServiceDefaults\SandboxAspireServiceDefaults.csproj" />
+        <ProjectReference Include="..\SandboxAuthentication\SandboxAuthentication.csproj" />
+        <ProjectReference Include="..\SandboxConfigurations\SandboxConfigurations.csproj" />
+        <ProjectReference Include="..\SandboxRemoteApisInterfaces\SandboxRemoteApisInterfaces.csproj" />
+        <ProjectReference Include="..\SandboxRemoteApisRepositories\SandboxRemoteApisRepositories.csproj" />
+        <ProjectReference Include="..\SandboxServices\SandboxServices.csproj" />
+        <ProjectReference Include="..\WebApiSandboxControllers\WebApiSandboxControllers.csproj" />
+        <ProjectReference Include="..\WebApiSandboxRepositories\WebApiSandboxRepositories.csproj" />
     </ItemGroup>
 
 </Project>
