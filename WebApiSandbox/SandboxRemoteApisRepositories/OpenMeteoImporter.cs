@@ -1,4 +1,5 @@
-﻿using System.Globalization;
+﻿using System.Diagnostics;
+using System.Globalization;
 using System.Net.Http.Json;
 using EfCoreContext.Models;
 using Microsoft.Extensions.Logging;
@@ -24,6 +25,7 @@ public class OpenMeteoImporter : IWeatherImport
     public async Task<List<ForecastViewModel>> GetForecasts(decimal latitude,     decimal longitude, DateOnly endDate,
                                                             int     numberOfDays, CancellationToken ct)
     {
+        using var activity=ActivitySrc.StartActivity("GetForecasts", ActivityKind.Client);
         var req = new HttpRequestMessage(HttpMethod.Get,
                                          $"{Config.BaseUrl}/archive?latitude={latitude.ToString(CultureInfo.InvariantCulture)}&longitude={longitude.ToString(CultureInfo.InvariantCulture)}&start_date={endDate.AddDays(-numberOfDays).ToString("yyyy-MM-dd")}&end_date={endDate.ToString("yyyy-MM-dd")}&daily=weather_code,temperature_2m_max,temperature_2m_min");
         req.Headers.Add("Accept", "application/json");
@@ -44,6 +46,7 @@ public class OpenMeteoImporter : IWeatherImport
     }
 
     public ILogger<OpenMeteoImporter> Logger     { get; }
+    public ActivitySource            ActivitySrc=new("OpenMeteoImporter");
     public HttpClient                 HttpClient { get; }
 }
 
