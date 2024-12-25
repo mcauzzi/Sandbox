@@ -1,3 +1,5 @@
+namespace SandboxMigrationService.JsonModels;
+
 public record JsonState(
     int    id,
     string name,
