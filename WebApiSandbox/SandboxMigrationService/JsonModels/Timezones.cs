@@ -1,3 +1,5 @@
+namespace SandboxMigrationService.JsonModels;
+
 public record Timezones(
     string zoneName,
     int    gmtOffset,

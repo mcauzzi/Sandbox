@@ -1,10 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
+#
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebApiSandbox", "WebApiSandbox\WebApiSandbox.csproj", "{52610C1E-36BA-4AD4-B6C8-D0AA099E0F4B}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EfCoreContext", "EfCoreContext\EfCoreContext.csproj", "{526F5AEB-703D-4913-A758-2E1485A2C28B}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DbDataGenerator", "DbDataGenerator\DbDataGenerator.csproj", "{D64A52CA-5388-4102-A119-32090CA0F543}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebApiSandboxControllers", "WebApiSandboxControllers\WebApiSandboxControllers.csproj", "{842557F7-36D1-452C-8CE9-8B428CE0BAC8}"
 EndProject
@@ -34,6 +33,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SandboxAppHost", "SandboxAp
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SandboxAspireServiceDefaults", "SandboxAspireServiceDefaults\SandboxAspireServiceDefaults.csproj", "{B6C8FEEE-9F0A-4D28-B6EE-727F8FC95A47}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SandboxMigrationService", "SandboxMigrationService\SandboxMigrationService.csproj", "{07F99F0C-FA98-4DF9-9CC5-C36B84B85EC7}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -48,10 +49,6 @@ Global
 		{526F5AEB-703D-4913-A758-2E1485A2C28B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{526F5AEB-703D-4913-A758-2E1485A2C28B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{526F5AEB-703D-4913-A758-2E1485A2C28B}.Release|Any CPU.Build.0 = Release|Any CPU
-		{D64A52CA-5388-4102-A119-32090CA0F543}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{D64A52CA-5388-4102-A119-32090CA0F543}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{D64A52CA-5388-4102-A119-32090CA0F543}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{D64A52CA-5388-4102-A119-32090CA0F543}.Release|Any CPU.Build.0 = Release|Any CPU
 		{842557F7-36D1-452C-8CE9-8B428CE0BAC8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{842557F7-36D1-452C-8CE9-8B428CE0BAC8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{842557F7-36D1-452C-8CE9-8B428CE0BAC8}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -104,6 +101,10 @@ Global
 		{B6C8FEEE-9F0A-4D28-B6EE-727F8FC95A47}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B6C8FEEE-9F0A-4D28-B6EE-727F8FC95A47}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B6C8FEEE-9F0A-4D28-B6EE-727F8FC95A47}.Release|Any CPU.Build.0 = Release|Any CPU
+		{07F99F0C-FA98-4DF9-9CC5-C36B84B85EC7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{07F99F0C-FA98-4DF9-9CC5-C36B84B85EC7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{07F99F0C-FA98-4DF9-9CC5-C36B84B85EC7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{07F99F0C-FA98-4DF9-9CC5-C36B84B85EC7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{52610C1E-36BA-4AD4-B6C8-D0AA099E0F4B} = {710C6521-9361-422F-87E6-5485759E0B22}

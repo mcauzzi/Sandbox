@@ -1,3 +1,5 @@
+namespace SandboxMigrationService.JsonModels;
+
 public record JsonCountry(
     int          id,
     string       name,

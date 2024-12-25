@@ -17,6 +17,7 @@
     </ItemGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\SandboxMigrationService\SandboxMigrationService.csproj" />
       <ProjectReference Include="..\WebApiSandbox\WebApiSandbox.csproj" />
     </ItemGroup>
 

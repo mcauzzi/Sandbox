@@ -35,6 +35,7 @@ public static class Extensions
                                                          // Turn on service discovery by default
                                                          http.AddServiceDiscovery();
                                                      });
+        builder.AddSerilogDefaultConfig();
 
         // Uncomment the following to restrict the allowed schemes for service discovery.
         // builder.Services.Configure<ServiceDiscoveryOptions>(options =>
@@ -123,13 +124,14 @@ public static class Extensions
 
         return app;
     }
-    public static  IHostApplicationBuilder AddSerilogDefaultConfig(this IHostApplicationBuilder builder)
+    private static  IHostApplicationBuilder AddSerilogDefaultConfig(this IHostApplicationBuilder builder)
     {
         Log.Logger =  new LoggerConfiguration()
                       .WriteTo.Console(Formatters.CreateConsoleTextFormatter(TemplateTheme.Code))
                       .CreateLogger();
         using var listener = new ActivityListenerConfiguration()
                              .Instrument.AspNetCoreRequests()
+                             .Instrument.WithDefaultInstrumentation(true)
                              .TraceToSharedLogger();
         builder.Services.AddSerilog();
         return builder;

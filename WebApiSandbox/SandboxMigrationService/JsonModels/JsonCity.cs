@@ -1,3 +1,5 @@
+namespace SandboxMigrationService.JsonModels;
+
 public record JsonCity(
     int    id,
     string name,

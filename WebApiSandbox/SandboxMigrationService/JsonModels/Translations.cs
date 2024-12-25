@@ -1,3 +1,5 @@
+namespace SandboxMigrationService.JsonModels;
+
 public record Translations(
     string kr,
     string pt_BR,
