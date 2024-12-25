@@ -39,8 +39,6 @@ public class Worker(IServiceProvider serviceProvider, IHostApplicationLifetime h
         {
             hostApplicationLifetime.StopApplication();
         }
-
-        hostApplicationLifetime.StopApplication();
     }
 
     private static async Task EnsureDatabaseAsync(SandboxContext dbContext, CancellationToken cancellationToken)

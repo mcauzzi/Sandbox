@@ -1,4 +1,5 @@
-﻿using EfCoreContext;
+﻿using System.Diagnostics;
+using EfCoreContext;
 using EfCoreContext.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
@@ -10,9 +11,9 @@ namespace SandboxServices;
 
 public class WeatherDataImporter : BackgroundService
 {
-    private readonly ILogger<WeatherDataImporter> _logger;
-    private readonly IServiceProvider             _serviceProvider;
-
+    private readonly        ILogger<WeatherDataImporter> _logger;
+    private readonly        IServiceProvider             _serviceProvider;
+    private static readonly ActivitySource               s_activitySource   = new("WeatherDataImporter");
     public WeatherDataImporter(ILogger<WeatherDataImporter> logger, IServiceProvider serviceProvider)
     {
         _logger          = logger;
@@ -33,6 +34,7 @@ public class WeatherDataImporter : BackgroundService
             {
                 var dbContext = scope.ServiceProvider.GetRequiredService<SandboxContext>();
                 var api       = scope.ServiceProvider.GetRequiredService<IWeatherImport>();
+                using var importActivity=s_activitySource.StartActivity("Importing weather data");
                 try
                 {
                     var startDate = DateOnly.FromDateTime(DateTime.Now).AddDays(-Random.Shared.Next(365*60));
@@ -46,6 +48,7 @@ public class WeatherDataImporter : BackgroundService
                     var roundedLongitude = Math.Round(randomCity.Longitude, 4);
                     var forecasts = await api.GetForecasts(roundedLatitude, roundedLongitude,
                                                            startDate, days, stoppingToken);
+                    using var importDbActivity=s_activitySource.StartActivity("Saving forecasts to db", ActivityKind.Producer);
                     await dbContext.WeatherForecasts.AddRangeAsync(forecasts.Select(f => new WeatherForecast
                                                                        {
                                                                            CityId = 1,
