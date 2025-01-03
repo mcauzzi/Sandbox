@@ -1,4 +1,5 @@
 using EfCoreContext;
+using SandboxAspireServiceDefaults;
 using SandboxMigrationService;
 
 var builder = Host.CreateApplicationBuilder(args);

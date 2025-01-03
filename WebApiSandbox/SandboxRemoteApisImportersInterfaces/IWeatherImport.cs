@@ -1,6 +1,6 @@
 ﻿using WebApiSandboxViewModels;
 
-namespace SandboxRemoteApisInterfaces;
+namespace SandboxRemoteApisImportersInterfaces;
 
 public interface IWeatherImport
 {

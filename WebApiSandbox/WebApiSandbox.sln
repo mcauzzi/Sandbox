@@ -23,11 +23,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SandboxConfigurations", "Sa
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SandboxServices", "SandboxServices\SandboxServices.csproj", "{2C10AA00-9794-4686-AD22-009C4DC153E2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SandboxRemoteApisInterfaces", "SandboxRemoteApisInterfaces\SandboxRemoteApisInterfaces.csproj", "{1D8B9B20-4809-46E9-9018-6A7B123C9F97}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SandboxRemoteApisImportersInterfaces", "SandboxRemoteApisImportersInterfaces\SandboxRemoteApisImportersInterfaces.csproj", "{1D8B9B20-4809-46E9-9018-6A7B123C9F97}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SandboxRemoteApisRepositories", "SandboxRemoteApisRepositories\SandboxRemoteApisRepositories.csproj", "{96488E09-2DBA-40DF-A482-99D622D97FC4}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SandboxRemoteApisImporters", "SandboxRemoteApisImporters\SandboxRemoteApisImporters.csproj", "{96488E09-2DBA-40DF-A482-99D622D97FC4}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "WebApis", "WebApis", "{710C6521-9361-422F-87E6-5485759E0B22}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "WebApi", "WebApi", "{710C6521-9361-422F-87E6-5485759E0B22}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SandboxAppHost", "SandboxAppHost\SandboxAppHost.csproj", "{BB7247A8-9EB4-4241-9525-24AF622187AD}"
 EndProject
