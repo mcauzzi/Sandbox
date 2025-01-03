@@ -5,10 +5,10 @@ using EfCoreContext.Models;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using SandboxConfigurations;
-using SandboxRemoteApisInterfaces;
+using SandboxRemoteApisImportersInterfaces;
 using WebApiSandboxViewModels;
 
-namespace SandboxRemoteApisRepositories;
+namespace SandboxRemoteApisImporters;
 
 public class OpenMeteoImporter : IWeatherImport
 {

@@ -13,7 +13,7 @@
 
     <ItemGroup>
       <ProjectReference Include="..\EfCoreContext\EfCoreContext.csproj" />
-      <ProjectReference Include="..\SandboxRemoteApisInterfaces\SandboxRemoteApisInterfaces.csproj" />
+      <ProjectReference Include="..\SandboxRemoteApisImportersInterfaces\SandboxRemoteApisImportersInterfaces.csproj" />
     </ItemGroup>
 
 </Project>
