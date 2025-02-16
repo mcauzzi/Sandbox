@@ -1,6 +1,6 @@
 ﻿using EfCoreContext;
-using EfCoreContext.Models;
 using Microsoft.EntityFrameworkCore;
+using Models;
 using RepositoriesExceptions;
 using WebApiSandboxRepositoryInterfaces;
 using WebApiSandboxViewModels;
