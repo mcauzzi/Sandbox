@@ -4,13 +4,9 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using OpenTelemetry;
 using OpenTelemetry.Metrics;
 using OpenTelemetry.Trace;
-using Serilog;
-using Serilog.Sinks.OpenTelemetry;
-using Serilog.Templates.Themes;
-using SerilogTracing;
-using SerilogTracing.Expressions;
 
 namespace SandboxAspireServiceDefaults;
 
@@ -35,7 +31,6 @@ public static class Extensions
                                                          // Turn on service discovery by default
                                                          http.AddServiceDiscovery();
                                                      });
-        builder.AddSerilogDefaultConfig();
 
         // Uncomment the following to restrict the allowed schemes for service discovery.
         // builder.Services.Configure<ServiceDiscoveryOptions>(options =>
@@ -71,6 +66,28 @@ public static class Extensions
                                        .AddHttpClientInstrumentation();
                             });
 
+        builder.AddOpenTelemetryExporters();
+
+        return builder;
+    }
+
+    private static TBuilder AddOpenTelemetryExporters<TBuilder>(this TBuilder builder)
+        where TBuilder : IHostApplicationBuilder
+    {
+        var useOtlpExporter = !string.IsNullOrWhiteSpace(builder.Configuration["OTEL_EXPORTER_OTLP_ENDPOINT"]);
+
+        if (useOtlpExporter)
+        {
+            builder.Services.AddOpenTelemetry().UseOtlpExporter();
+        }
+
+        // Uncomment the following lines to enable the Azure Monitor exporter (requires the Azure.Monitor.OpenTelemetry.AspNetCore package)
+        //if (!string.IsNullOrEmpty(builder.Configuration["APPLICATIONINSIGHTS_CONNECTION_STRING"]))
+        //{
+        //    builder.Services.AddOpenTelemetry()
+        //       .UseAzureMonitor();
+        //}
+
         return builder;
     }
 
@@ -101,39 +118,5 @@ public static class Extensions
         }
 
         return app;
-    }
-
-    private static IHostApplicationBuilder AddSerilogDefaultConfig(this IHostApplicationBuilder builder)
-    {
-        var useOtlpExporter = !string.IsNullOrWhiteSpace(builder.Configuration["OTEL_EXPORTER_OTLP_ENDPOINT"]);
-        var logConfiguration =
-            new LoggerConfiguration().WriteTo.Console(Formatters.CreateConsoleTextFormatter(TemplateTheme.Code));
-
-        if (useOtlpExporter)
-        {
-            logConfiguration.WriteTo.OpenTelemetry(options =>
-                                                   {
-                                                       options.Endpoint =
-                                                           builder.Configuration["OTEL_EXPORTER_OTLP_ENDPOINT"];
-                                                       options.ResourceAttributes.Add("service.name", "Sandbox");
-                                                       options.IncludedData =
-                                                           IncludedData.TraceIdField | IncludedData.SpanIdField;
-                                                       options.Protocol = OtlpProtocol.Grpc;
-                                                   });
-        }
-
-        Log.Logger = logConfiguration.CreateLogger();
-
-        builder.Services.AddSerilog();
-        return builder;
-    }
-
-    public static IDisposable AddSerilogTracing(this IHostApplicationBuilder builder)
-    {
-        return new ActivityListenerConfiguration().Instrument.AspNetCoreRequests()
-                                                  .Instrument.WithDefaultInstrumentation(true)
-                                                  .Instrument.HttpClientRequests()
-                                                  .ActivityEvents.AsLogEvents()
-                                                  .TraceToSharedLogger();
     }
 }

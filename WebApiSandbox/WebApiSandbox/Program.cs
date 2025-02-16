@@ -58,7 +58,6 @@ builder.Services.AddControllers()
        .AddApplicationPart(typeof(WeatherForecastController).Assembly)
        .AddControllersAsServices();
 builder.AddServiceDefaults();
-using var serilogTracing=builder.AddSerilogTracing();
 builder.AddNpgsqlDbContext<SandboxContext>(connectionName: "WeatherDb");
 builder.Services.AddIdentity<IdentityUser, IdentityRole>()
        .AddEntityFrameworkStores<SandboxContext>()
