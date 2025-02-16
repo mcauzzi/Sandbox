@@ -32,9 +32,9 @@ public class SandboxContext : IdentityDbContext<IdentityUser, IdentityRole, stri
     {
         base.OnModelCreating(modelBuilder);
 
-        modelBuilder.ApplyConfiguration(new Configurations.WeatherForecastConfiguration());
-        modelBuilder.ApplyConfiguration(new Configurations.CityConfiguration());
-        modelBuilder.ApplyConfiguration(new Configurations.StateConfiguration());
-        modelBuilder.ApplyConfiguration(new Configurations.CountryConfiguration());
+        modelBuilder.ApplyConfiguration(new WeatherForecastConfiguration());
+        modelBuilder.ApplyConfiguration(new CityConfiguration());
+        modelBuilder.ApplyConfiguration(new StateConfiguration());
+        modelBuilder.ApplyConfiguration(new CountryConfiguration());
     }
 }
