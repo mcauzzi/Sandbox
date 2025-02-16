@@ -1,7 +1,8 @@
-﻿using EfCoreContext.Models;
+﻿using EfCoreContext.Configurations;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using Models;
 
 namespace EfCoreContext;
 
@@ -31,13 +32,10 @@ public class SandboxContext : IdentityDbContext<IdentityUser, IdentityRole, stri
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);
-        //modelBuilder.HasPostgresEnum<WeatherSummary>();
-        modelBuilder
-            .Entity<WeatherForecast>()
-            .Property(e => e.Summary)
-            .HasConversion(
-                           v => v.ToString(),
-                           v => (WeatherWmoCode)Enum.Parse(typeof(WeatherWmoCode), v));
-        //modelBuilder.Entity<WeatherForecast>().Property(wf => wf.Summary).HasConversion<int>();
+
+        modelBuilder.ApplyConfiguration(new WeatherForecastConfiguration());
+        modelBuilder.ApplyConfiguration(new CityConfiguration());
+        modelBuilder.ApplyConfiguration(new StateConfiguration());
+        modelBuilder.ApplyConfiguration(new CountryConfiguration());
     }
 }
