@@ -6,7 +6,7 @@ public static class AuthInitializer
 {
     public static async Task Initialize(RoleManager<IdentityRole> roleManager, UserManager<IdentityUser> userManager)
     {
-        var roles = new[] { "Admin", "User" };
+        var roles = new[] { "Admins", "User" };
 
         foreach (var role in roles)
         {
@@ -22,8 +22,8 @@ public static class AuthInitializer
             var result = await userManager.CreateAsync(adminUser, "Admin123@");
             if (result.Succeeded)
             {
-                await userManager.AddToRoleAsync(adminUser, "User");
-                await userManager.AddToRoleAsync(adminUser, "Admin");
+                await userManager.AddToRoleAsync(adminUser, "Users");
+                await userManager.AddToRoleAsync(adminUser, "Admins");
             }
         }
 
@@ -33,7 +33,7 @@ public static class AuthInitializer
             var result = await userManager.CreateAsync(basicUser, "User123@");
             if (result.Succeeded)
             {
-                await userManager.AddToRoleAsync(basicUser, "User");
+                await userManager.AddToRoleAsync(basicUser, "Users");
             }
         }
     }

@@ -7,7 +7,7 @@ using WebApiSandboxViewModels;
 namespace WebApiSandboxControllers;
 
 [ApiController]
-[Authorize(Roles ="User" )]
+[Authorize(Roles ="Admins,Users" )]
 [Route("[controller]", Name = "WeatherForecast")]
 public class WeatherForecastController:Controller
 {
