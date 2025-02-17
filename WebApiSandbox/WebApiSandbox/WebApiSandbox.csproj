@@ -15,7 +15,7 @@
 
     <ItemGroup>
         <FrameworkReference Include="Microsoft.AspNetCore.App" />
-        <ProjectReference Include="..\EfCoreContext\EfCoreContext.csproj" />
+        <ProjectReference Include="..\WeatherDbContext\WeatherDbContext.csproj" />
         <ProjectReference Include="..\SandboxAspireServiceDefaults\SandboxAspireServiceDefaults.csproj" />
         <ProjectReference Include="..\SandboxAuthentication\SandboxAuthentication.csproj" />
         <ProjectReference Include="..\SandboxConfigurations\SandboxConfigurations.csproj" />

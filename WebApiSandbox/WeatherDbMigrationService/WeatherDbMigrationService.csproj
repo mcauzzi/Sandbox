@@ -5,6 +5,7 @@
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <UserSecretsId>dotnet-SandboxMigrationService-14204016-e7b9-4ff6-b469-f110efe7a982</UserSecretsId>
+    <RootNamespace>SandboxMigrationService</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>
@@ -13,7 +14,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\EfCoreContext\EfCoreContext.csproj" />
+    <ProjectReference Include="..\WeatherDbContext\WeatherDbContext.csproj" />
     <ProjectReference Include="..\SandboxAspireServiceDefaults\SandboxAspireServiceDefaults.csproj" />
   </ItemGroup>
 </Project>

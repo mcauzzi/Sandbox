@@ -15,11 +15,11 @@ public class Worker(IServiceProvider serviceProvider, IHostApplicationLifetime h
     : BackgroundService
 {
     public const            string         ActivitySourceName = "Migrations";
-    private static readonly ActivitySource s_activitySource   = new(ActivitySourceName);
+    private static readonly ActivitySource ActivitySource   = new(ActivitySourceName);
 
     protected override async Task ExecuteAsync(CancellationToken cancellationToken)
     {
-        using var activity = s_activitySource.StartActivity("Migrating database", ActivityKind.Client);
+        using var activity = ActivitySource.StartActivity("Migrating database", ActivityKind.Client);
 
         try
         {
@@ -49,7 +49,7 @@ public class Worker(IServiceProvider serviceProvider, IHostApplicationLifetime h
         await strategy.ExecuteAsync(async () =>
                                     {
                                         using var activity =
-                                            s_activitySource.StartActivity("Database Creation", ActivityKind.Client);
+                                            ActivitySource.StartActivity("Database Creation", ActivityKind.Client);
                                         // Create the database if it does not exist.
                                         // Do this first so there is then a database to start a transaction against.
                                         if (!await dbCreator.ExistsAsync(cancellationToken))
@@ -66,7 +66,7 @@ public class Worker(IServiceProvider serviceProvider, IHostApplicationLifetime h
         await strategy.ExecuteAsync(async () =>
                                     {
                                         using var activity =
-                                            s_activitySource.StartActivity("Applying Migrations", ActivityKind.Client);
+                                            ActivitySource.StartActivity( ActivityKind.Client);
                                         // Run migration in a transaction to avoid partial migration if it fails.
                                         await dbContext.Database.MigrateAsync(cancellationToken);
                                     });
@@ -79,7 +79,7 @@ public class Worker(IServiceProvider serviceProvider, IHostApplicationLifetime h
         await strategy.ExecuteAsync(async () =>
                                     {
                                         using var activity =
-                                            s_activitySource.StartActivity("Seeding Data", ActivityKind.Client);
+                                            ActivitySource.StartActivity( ActivityKind.Client);
                                         // Seed the database
                                         await using var transaction =
                                             await dbContext.Database.BeginTransactionAsync(cancellationToken);
@@ -94,7 +94,7 @@ public class Worker(IServiceProvider serviceProvider, IHostApplicationLifetime h
 
     private static async Task AddStates(SandboxContext dbContext, CancellationToken cancellationToken)
     {
-        using var activity = s_activitySource.StartActivity("Adding states", ActivityKind.Client);
+        using var activity = ActivitySource.StartActivity( ActivityKind.Client);
         if (await dbContext.States.AnyAsync(cancellationToken: cancellationToken))
         {
             return;
@@ -113,7 +113,7 @@ public class Worker(IServiceProvider serviceProvider, IHostApplicationLifetime h
 
     private static async Task AddCities(SandboxContext dbContext, CancellationToken cancellationToken)
     {
-        using var activity = s_activitySource.StartActivity("Adding cities", ActivityKind.Client);
+        using var activity = ActivitySource.StartActivity( ActivityKind.Client);
         if (await dbContext.Cities.AnyAsync(cancellationToken: cancellationToken))
         {
             return;
@@ -138,7 +138,7 @@ public class Worker(IServiceProvider serviceProvider, IHostApplicationLifetime h
 
     private static async Task AddCountries(SandboxContext dbContext, CancellationToken cancellationToken)
     {
-        using var activity = s_activitySource.StartActivity("Adding countries", ActivityKind.Client);
+        using var activity = ActivitySource.StartActivity( ActivityKind.Client);
         if (await dbContext.Countries.AnyAsync(cancellationToken: cancellationToken))
         {
             return;

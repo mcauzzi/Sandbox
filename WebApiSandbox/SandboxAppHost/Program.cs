@@ -4,7 +4,7 @@ var dataBase = builder.AddPostgres("postgres")
                       .WithPgAdmin()
                       .WithLifetime(ContainerLifetime.Persistent);
 var weatherDb = dataBase.AddDatabase("weatherdb");
-var migrationService=builder.AddProject<Projects.SandboxMigrationService>("migrations")
+var migrationService=builder.AddProject<Projects.WeatherDbMigrationService>("migrations")
        .WithReference(weatherDb).WaitFor(weatherDb);
 builder.AddProject<Projects.WebApiSandbox>("WebApi").WaitForCompletion(migrationService).WithReference(weatherDb);
 

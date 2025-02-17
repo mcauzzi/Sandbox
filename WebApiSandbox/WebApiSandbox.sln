@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 #
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebApiSandbox", "WebApiSandbox\WebApiSandbox.csproj", "{52610C1E-36BA-4AD4-B6C8-D0AA099E0F4B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EfCoreContext", "EfCoreContext\EfCoreContext.csproj", "{526F5AEB-703D-4913-A758-2E1485A2C28B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WeatherDbContext", "WeatherDbContext\WeatherDbContext.csproj", "{526F5AEB-703D-4913-A758-2E1485A2C28B}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebApiSandboxControllers", "WebApiSandboxControllers\WebApiSandboxControllers.csproj", "{842557F7-36D1-452C-8CE9-8B428CE0BAC8}"
 EndProject
@@ -31,7 +31,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "WebApi", "WebApi", "{710C65
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SandboxAppHost", "SandboxAppHost\SandboxAppHost.csproj", "{BB7247A8-9EB4-4241-9525-24AF622187AD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SandboxMigrationService", "SandboxMigrationService\SandboxMigrationService.csproj", "{07F99F0C-FA98-4DF9-9CC5-C36B84B85EC7}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WeatherDbMigrationService", "WeatherDbMigrationService\WeatherDbMigrationService.csproj", "{07F99F0C-FA98-4DF9-9CC5-C36B84B85EC7}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SandboxAspireServiceDefaults", "SandboxAspireServiceDefaults\SandboxAspireServiceDefaults.csproj", "{8869B1B8-2B4F-429C-8C85-61100C8A8710}"
 EndProject
@@ -40,6 +40,10 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Authentication", "Authentication", "{0FEEAB8E-5A30-4DA8-9D0A-74CAE5150835}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "WeatherImportService", "WeatherImportService", "{327E2B4B-BCAB-4219-B4E4-631CC44E393B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WeatherModels", "WeatherModels\WeatherModels.csproj", "{2DC8E861-9728-4232-AFC2-EB8C80B84586}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "WeatherStorage", "WeatherStorage", "{C2A1479A-B0A0-4306-9B7D-145B6C44FEC4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -111,6 +115,10 @@ Global
 		{8869B1B8-2B4F-429C-8C85-61100C8A8710}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8869B1B8-2B4F-429C-8C85-61100C8A8710}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8869B1B8-2B4F-429C-8C85-61100C8A8710}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2DC8E861-9728-4232-AFC2-EB8C80B84586}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2DC8E861-9728-4232-AFC2-EB8C80B84586}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2DC8E861-9728-4232-AFC2-EB8C80B84586}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2DC8E861-9728-4232-AFC2-EB8C80B84586}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{52610C1E-36BA-4AD4-B6C8-D0AA099E0F4B} = {710C6521-9361-422F-87E6-5485759E0B22}
@@ -125,5 +133,8 @@ Global
 		{2C10AA00-9794-4686-AD22-009C4DC153E2} = {327E2B4B-BCAB-4219-B4E4-631CC44E393B}
 		{1D8B9B20-4809-46E9-9018-6A7B123C9F97} = {327E2B4B-BCAB-4219-B4E4-631CC44E393B}
 		{96488E09-2DBA-40DF-A482-99D622D97FC4} = {327E2B4B-BCAB-4219-B4E4-631CC44E393B}
+		{526F5AEB-703D-4913-A758-2E1485A2C28B} = {C2A1479A-B0A0-4306-9B7D-145B6C44FEC4}
+		{2DC8E861-9728-4232-AFC2-EB8C80B84586} = {C2A1479A-B0A0-4306-9B7D-145B6C44FEC4}
+		{07F99F0C-FA98-4DF9-9CC5-C36B84B85EC7} = {C2A1479A-B0A0-4306-9B7D-145B6C44FEC4}
 	EndGlobalSection
 EndGlobal

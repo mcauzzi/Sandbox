@@ -12,7 +12,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\EfCoreContext\EfCoreContext.csproj" />
+      <ProjectReference Include="..\WeatherDbContext\WeatherDbContext.csproj" />
       <ProjectReference Include="..\SandboxRemoteApisImportersInterfaces\SandboxRemoteApisImportersInterfaces.csproj" />
     </ItemGroup>
 
