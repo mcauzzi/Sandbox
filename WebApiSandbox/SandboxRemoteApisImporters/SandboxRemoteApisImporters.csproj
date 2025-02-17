@@ -7,7 +7,7 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\EfCoreContext\EfCoreContext.csproj" />
+      <ProjectReference Include="..\WeatherDbContext\WeatherDbContext.csproj" />
       <ProjectReference Include="..\SandboxConfigurations\SandboxConfigurations.csproj" />
       <ProjectReference Include="..\SandboxRemoteApisImportersInterfaces\SandboxRemoteApisImportersInterfaces.csproj" />
       <ProjectReference Include="..\WebApiSandboxViewModels\WebApiSandboxViewModels.csproj" />

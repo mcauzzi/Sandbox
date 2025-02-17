@@ -4,6 +4,7 @@
         <TargetFramework>net9.0</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
+        <RootNamespace>EfCoreContext</RootNamespace>
     </PropertyGroup>
 
     <ItemGroup>
@@ -17,7 +18,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\Models\Models.csproj" />
+      <ProjectReference Include="..\WeatherModels\WeatherModels.csproj" />
     </ItemGroup>
 
 </Project>

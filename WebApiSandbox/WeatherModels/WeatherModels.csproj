@@ -2,6 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>net9.0</TargetFramework>
+    <RootNamespace>Models</RootNamespace>
   </PropertyGroup>
 
 </Project>
