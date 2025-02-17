@@ -58,8 +58,10 @@ builder.Services.AddControllers()
        .AddApplicationPart(typeof(WeatherForecastController).Assembly)
        .AddControllersAsServices();
 builder.AddServiceDefaults();
+builder.AddRedisClient(connectionName: "cache");
 builder.AddNpgsqlDbContext<SandboxContext>(connectionName: "WeatherDb");
 builder.Services.AddIdentity<IdentityUser, IdentityRole>()
+       .AddRoles<IdentityRole>()
        .AddEntityFrameworkStores<SandboxContext>()
        .AddDefaultTokenProviders();
 builder.Services.AddAuthentication(options =>
@@ -88,9 +90,9 @@ builder.Services.AddScoped<ITokenService, TokenService>();
 builder.Services.AddScoped<IWeatherImport, OpenMeteoImporter>();
 builder.Services.AddHostedService<WeatherDataImporter>();
 builder.Services.AddHttpClient<IWeatherImport, OpenMeteoImporter>();
-builder.Services.AddAuthorizationBuilder()
-    .AddPolicy("Users", policy => policy.RequireRole("Users"))
-    .AddPolicy("Admin", policy => policy.RequireRole("Admin"));
+// builder.Services.AddAuthorizationBuilder()
+//        .AddPolicy("Users",  policy => policy.RequireRole("Users"))
+//        .AddPolicy("Admins", policy => policy.RequireRole("Admins"));
 var app = builder.Build();
 // Create roles if they don't exist
 using (var scope = app.Services.CreateScope())

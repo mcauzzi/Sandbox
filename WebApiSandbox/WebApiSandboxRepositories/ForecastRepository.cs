@@ -1,15 +1,18 @@
-﻿using EfCoreContext;
+﻿using System.Text.Json;
+using EfCoreContext;
 using Microsoft.EntityFrameworkCore;
 using Models;
 using RepositoriesExceptions;
+using StackExchange.Redis;
 using WebApiSandboxRepositoryInterfaces;
 using WebApiSandboxViewModels;
 
 namespace WebApiSandboxRepositories;
 
-public class ForecastRepository(SandboxContext context) : IForecastsRepository
+public class ForecastRepository(SandboxContext context,IConnectionMultiplexer conn) : IForecastsRepository
 {
     private SandboxContext Context { get; } = context;
+    private IDatabase      Redis   { get; }= conn.GetDatabase();
 
     public async Task<IEnumerable<ForecastViewModel>> Get(int rows, int offset)
     {
@@ -30,20 +33,29 @@ public class ForecastRepository(SandboxContext context) : IForecastsRepository
 
     public async Task<IEnumerable<ForecastViewModel>> GetByCity(int cityId, int rows, int offset)
     {
-        return await Context.WeatherForecasts
-                            .Where(x=>x.CityId==cityId)
-                            .OrderBy(x=>x.Id)
-                            .Skip(offset)
-                            .Take(rows)
-                            .Select(wf => new ForecastViewModel
-                                          {
-                                              CityName    = wf.City.Name,
-                                              StateName   = wf.City.State.Name,
-                                              CountryName = wf.City.State.Country.Name,
-                                              Summary     = wf.Summary.ToString(),
-                                              Temperature = wf.TemperatureC,
-                                              Date        = wf.Date
-                                          }).ToListAsync();
+        var cachedVal = await Redis.StringGetAsync($"{cityId}|{rows}|{offset}");
+        if(cachedVal.HasValue)
+        {
+           return JsonSerializer.Deserialize<IEnumerable<ForecastViewModel>>(cachedVal);
+        }
+
+        var dbRes= await Context.WeatherForecasts
+                                .Where(x=>x.CityId==cityId)
+                                .OrderBy(x=>x.Id)
+                                .Skip(offset)
+                                .Take(rows)
+                                .Select(wf => new ForecastViewModel
+                                              {
+                                                  CityName    = wf.City.Name,
+                                                  StateName   = wf.City.State.Name,
+                                                  CountryName = wf.City.State.Country.Name,
+                                                  Summary     = wf.Summary.ToString(),
+                                                  Temperature = wf.TemperatureC,
+                                                  Date        = wf.Date
+                                              }).ToListAsync();
+        await Redis.StringSetAsync($"{cityId}|{rows}|{offset}",JsonSerializer.Serialize(dbRes),TimeSpan.FromMinutes(5));
+        return dbRes;
+
     }
 
     public async Task<IEnumerable<ForecastViewModel>> GetByDate(DateOnly date, int rows, int offset)
