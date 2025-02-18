@@ -40,9 +40,8 @@ public class WeatherDataImporter : BackgroundService
                     var startDate = DateOnly.FromDateTime(DateTime.Now).AddDays(-Random.Shared.Next(365*60));
                     var days      = Random.Shared.Next(30);
                     var randomCity = await dbContext.Cities
-                                                    .Where(x => x.Latitude >= -90 && x.Latitude < 90
-                                                             && x.WeatherForecasts.Count == 0)
-                                                    .OrderBy(c => Guid.NewGuid())
+                                                    .Where(x => x.Latitude >= -90 && x.Latitude < 90)
+                                                    .OrderBy(c => c.WeatherForecasts.Count)
                                                     .FirstOrDefaultAsync(stoppingToken);
                     var roundedLatitude  = Math.Round(randomCity.Latitude,  4);
                     var roundedLongitude = Math.Round(randomCity.Longitude, 4);
@@ -51,7 +50,7 @@ public class WeatherDataImporter : BackgroundService
                     using var importDbActivity=s_activitySource.StartActivity("Saving forecasts to db", ActivityKind.Producer);
                     await dbContext.WeatherForecasts.AddRangeAsync(forecasts.Select(f => new WeatherForecast
                                                                        {
-                                                                           CityId = 1,
+                                                                           CityId = randomCity.Id,
                                                                            Date   = f.Date,
                                                                            Summary = Enum
                                                                                .Parse<

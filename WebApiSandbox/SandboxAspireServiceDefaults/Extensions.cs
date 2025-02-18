@@ -61,6 +61,7 @@ public static class Extensions
                             {
                                 tracing.AddSource(builder.Environment.ApplicationName)
                                        .AddAspNetCoreInstrumentation()
+                                       .AddSource("WeatherDataImporter")
                                        // Uncomment the following line to enable gRPC instrumentation (requires the OpenTelemetry.Instrumentation.GrpcNetClient package)
                                        //.AddGrpcClientInstrumentation()
                                        .AddHttpClientInstrumentation();
