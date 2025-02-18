@@ -6,7 +6,7 @@ public static class AuthInitializer
 {
     public static async Task Initialize(RoleManager<IdentityRole> roleManager, UserManager<IdentityUser> userManager)
     {
-        var roles = new[] { "Admins", "User" };
+        var roles = new[] { "Admins", "Users" };
 
         foreach (var role in roles)
         {
