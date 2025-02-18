@@ -3,6 +3,7 @@ using System;
 using EfCoreContext;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace EfCoreContext.Migrations
 {
     [DbContext(typeof(SandboxContext))]
-    partial class SandboxContextModelSnapshot : ModelSnapshot
+    [Migration("20250218205325_CreateImportMaterializedView")]
+    partial class CreateImportMaterializedView
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -230,6 +233,11 @@ namespace EfCoreContext.Migrations
                         .HasMaxLength(1000)
                         .HasColumnType("character varying(1000)");
 
+                    b.Property<long>("ForecastCount")
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasColumnType("bigint")
+                        .HasComputedColumnSql("(SELECT COUNT(*) FROM WeatherForecasts WHERE WeatherForecasts.CityId = Id)", true);
+
                     b.Property<decimal>("Latitude")
                         .HasColumnType("numeric");
 
@@ -245,6 +253,8 @@ namespace EfCoreContext.Migrations
                         .HasColumnType("integer");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("ForecastCount");
 
                     b.HasIndex("Latitude");
 
@@ -295,27 +305,6 @@ namespace EfCoreContext.Migrations
                     b.HasIndex("CountryId");
 
                     b.ToTable("States");
-                });
-
-            modelBuilder.Entity("Models.Views.RandomCityView", b =>
-                {
-                    b.Property<int>("CityId")
-                        .HasColumnType("integer");
-
-                    b.Property<long>("ForecastCount")
-                        .HasColumnType("bigint");
-
-                    b.Property<decimal>("Latitude")
-                        .HasColumnType("numeric");
-
-                    b.Property<decimal>("Longitude")
-                        .HasColumnType("numeric");
-
-                    b.HasKey("CityId");
-
-                    b.ToTable((string)null);
-
-                    b.ToView("RandomCityView", (string)null);
                 });
 
             modelBuilder.Entity("Models.WeatherForecast", b =>

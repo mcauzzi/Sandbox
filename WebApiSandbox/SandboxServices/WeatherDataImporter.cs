@@ -39,18 +39,22 @@ public class WeatherDataImporter : BackgroundService
                 {
                     var startDate = DateOnly.FromDateTime(DateTime.Now).AddDays(-Random.Shared.Next(365*60));
                     var days      = Random.Shared.Next(30);
-                    var randomCity = await dbContext.Cities
-                                                    .Where(x => x.Latitude >= -90 && x.Latitude < 90)
-                                                    .OrderBy(c => c.WeatherForecasts.Count)
+                    var randomCity = await dbContext.RandomCityViews
                                                     .FirstOrDefaultAsync(stoppingToken);
                     var roundedLatitude  = Math.Round(randomCity.Latitude,  4);
                     var roundedLongitude = Math.Round(randomCity.Longitude, 4);
                     var forecasts = await api.GetForecasts(roundedLatitude, roundedLongitude,
                                                            startDate, days, stoppingToken);
                     using var importDbActivity=s_activitySource.StartActivity("Saving forecasts to db", ActivityKind.Producer);
+                    if (Random.Shared.Next(10) == 1)
+                    {
+                        _logger.LogInformation("Refreshing materialized view {MaterializedView}", "RandomCityView");
+                        await dbContext.Database.ExecuteSqlAsync($"Refresh Materialized View \"RandomCityView\"", stoppingToken);
+                    }
+                   
                     await dbContext.WeatherForecasts.AddRangeAsync(forecasts.Select(f => new WeatherForecast
                                                                        {
-                                                                           CityId = randomCity.Id,
+                                                                           CityId = randomCity.CityId,
                                                                            Date   = f.Date,
                                                                            Summary = Enum
                                                                                .Parse<

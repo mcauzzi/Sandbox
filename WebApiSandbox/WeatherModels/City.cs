@@ -12,5 +12,4 @@ public class City
     public          decimal                  Longitude        { get; set; }
     public          State?                   State            { get; set; }
     public          HashSet<WeatherForecast> WeatherForecasts { get; set; } = new();
-    public          long                      ForecastCount    { get; private set; }
 }
