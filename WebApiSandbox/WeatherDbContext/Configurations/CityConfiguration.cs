@@ -15,8 +15,6 @@ public class CityConfiguration : IEntityTypeConfiguration<City>
         builder.Property(e => e.Latitude).IsRequired();
         builder.Property(e => e.Longitude).IsRequired();
         builder.HasIndex(x => x.Latitude);
-        builder.Property<int>(e=>e.ForecastCount)
-               .HasComputedColumnSql("(SELECT COUNT(*) FROM WeatherForecasts WHERE WeatherForecasts.CityId = Id)");
         builder.HasOne(e => e.State).WithMany(s => s.Cities).HasForeignKey(e => e.StateId);
     }
 }
