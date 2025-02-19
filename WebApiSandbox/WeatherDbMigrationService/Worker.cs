@@ -14,7 +14,7 @@ namespace SandboxMigrationService;
 public class Worker(IServiceProvider serviceProvider, IHostApplicationLifetime hostApplicationLifetime)
     : BackgroundService
 {
-    public const            string         ActivitySourceName = "Migrations";
+    public const            string         ActivitySourceName = "WeatherDbMigrations";
     private static readonly ActivitySource ActivitySource   = new(ActivitySourceName);
 
     protected override async Task ExecuteAsync(CancellationToken cancellationToken)

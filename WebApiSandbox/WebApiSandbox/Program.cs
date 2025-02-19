@@ -1,4 +1,5 @@
 using System.Text;
+using AuthContextNs;
 using EfCoreContext;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
@@ -60,9 +61,10 @@ builder.Services.AddControllers()
 builder.AddServiceDefaults();
 builder.AddRedisClient(connectionName: "cache");
 builder.AddNpgsqlDbContext<SandboxContext>(connectionName: "WeatherDb");
+builder.AddNpgsqlDbContext<AuthContext>(connectionName: "sandboxAuthDb");
 builder.Services.AddIdentity<IdentityUser, IdentityRole>()
        .AddRoles<IdentityRole>()
-       .AddEntityFrameworkStores<SandboxContext>()
+       .AddEntityFrameworkStores<AuthContext>()
        .AddDefaultTokenProviders();
 builder.Services.AddAuthentication(options =>
                                    {
@@ -94,13 +96,6 @@ builder.Services.AddHttpClient<IWeatherImport, OpenMeteoImporter>();
 //        .AddPolicy("Users",  policy => policy.RequireRole("Users"))
 //        .AddPolicy("Admins", policy => policy.RequireRole("Admins"));
 var app = builder.Build();
-// Create roles if they don't exist
-using (var scope = app.Services.CreateScope())
-{
-    var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
-    var userManager = scope.ServiceProvider.GetRequiredService<UserManager<IdentityUser>>();
-    await AuthInitializer.Initialize(roleManager, userManager);
-}
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

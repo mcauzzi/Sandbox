@@ -7,7 +7,7 @@ using Models.Views;
 
 namespace EfCoreContext;
 
-public class SandboxContext : IdentityDbContext<IdentityUser, IdentityRole, string>
+public class SandboxContext : DbContext
 {
     public SandboxContext(DbContextOptions<SandboxContext> options) : base(options)
     {
