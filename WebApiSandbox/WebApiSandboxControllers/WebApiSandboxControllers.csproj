@@ -10,7 +10,6 @@
     </ItemGroup>
     <ItemGroup>
       <ProjectReference Include="..\RepositoriesExceptions\RepositoriesExceptions.csproj" />
-      <ProjectReference Include="..\SandboxAuthenticationInterfaces\SandboxAuthenticationInterfaces.csproj" />
       <ProjectReference Include="..\WebApiSandboxRepositoryInterfaces\WebApiSandboxRepositoryInterfaces.csproj" />
     </ItemGroup>
 

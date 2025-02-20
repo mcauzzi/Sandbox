@@ -1,9 +1,9 @@
+using AuthViewModels;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using SandboxAuthenticationInterfaces;
-using WebApiSandboxViewModels;
 
-namespace WebApiSandboxControllers;
+namespace AuthWebApi;
 
 [ApiController]
 [Route("[controller]")]

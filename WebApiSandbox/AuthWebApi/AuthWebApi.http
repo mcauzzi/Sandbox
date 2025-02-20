@@ -1,0 +1,13 @@
+@AuthWebApi_HostAddress = https://localhost:7203
+POST {{AuthWebApi_HostAddress}}/auth/login
+Accept: application/json
+Content-Type: application/json
+
+{
+  "username": "admin",
+  "password": "Admin123@"
+}
+###
+GET {{AuthWebApi_HostAddress}}/WeatherForecast
+Accept: application/json
+

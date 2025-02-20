@@ -1,0 +1,22 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+    <PropertyGroup>
+        <TargetFramework>net9.0</TargetFramework>
+        <Nullable>enable</Nullable>
+        <ImplicitUsings>enable</ImplicitUsings>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="9.0.2"/>
+        <PackageReference Include="Aspire.Npgsql.EntityFrameworkCore.PostgreSQL" Version="9.0.0" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\AuthContext\AuthContext.csproj" />
+      <ProjectReference Include="..\AuthViewModels\AuthViewModels.csproj" />
+      <ProjectReference Include="..\SandboxAspireServiceDefaults\SandboxAspireServiceDefaults.csproj" />
+      <ProjectReference Include="..\SandboxAuthenticationInterfaces\SandboxAuthenticationInterfaces.csproj" />
+      <ProjectReference Include="..\SandboxAuthentication\SandboxAuthentication.csproj" />
+    </ItemGroup>
+
+</Project>

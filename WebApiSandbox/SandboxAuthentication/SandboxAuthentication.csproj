@@ -11,7 +11,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\WeatherDbContext\WeatherDbContext.csproj" />
+      <ProjectReference Include="..\AuthContext\AuthContext.csproj" />
       <ProjectReference Include="..\SandboxAuthenticationInterfaces\SandboxAuthenticationInterfaces.csproj" />
       <ProjectReference Include="..\SandboxConfigurations\SandboxConfigurations.csproj" />
     </ItemGroup>

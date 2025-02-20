@@ -55,12 +55,13 @@ public static class Extensions
                             {
                                 metrics.AddAspNetCoreInstrumentation()
                                        .AddHttpClientInstrumentation()
-                                       .AddRuntimeInstrumentation();
+                                       .AddRuntimeInstrumentation().AddMeter("Microsoft.EntityFrameworkCore");
                             })
                .WithTracing(tracing =>
                             {
                                 tracing.AddSource(builder.Environment.ApplicationName)
                                        .AddAspNetCoreInstrumentation()
+                                       .AddEntityFrameworkCoreInstrumentation()
                                        .AddSource("WeatherDataImporter")
                                        // Uncomment the following line to enable gRPC instrumentation (requires the OpenTelemetry.Instrumentation.GrpcNetClient package)
                                        //.AddGrpcClientInstrumentation()

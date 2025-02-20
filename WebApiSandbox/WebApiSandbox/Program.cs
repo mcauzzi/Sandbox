@@ -1,16 +1,8 @@
-using System.Text;
-using AuthContextNs;
 using EfCoreContext;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
-using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using SandboxAspireServiceDefaults;
-using SandboxAuthentication;
-using SandboxAuthenticationInterfaces;
 using SandboxConfigurations;
 using SandboxRemoteApisImportersInterfaces;
 using SandboxRemoteApisImporters;
@@ -22,7 +14,6 @@ using WebApiSandboxRepositoryInterfaces;
 var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-builder.Services.Configure<AuthConfig>(builder.Configuration.GetSection(nameof(AuthConfig)));
 builder.Services.Configure<OpenMeteoImporterConfig>(builder.Configuration.GetSection(nameof(OpenMeteoImporterConfig)));
 builder.Services.AddEndpointsApiExplorer();
 
@@ -60,12 +51,12 @@ builder.Services.AddControllers()
        .AddControllersAsServices();
 builder.AddServiceDefaults();
 builder.AddRedisClient(connectionName: "cache");
-builder.AddNpgsqlDbContext<SandboxContext>(connectionName: "WeatherDb");
-builder.AddNpgsqlDbContext<AuthContext>(connectionName: "sandboxAuthDb");
-builder.Services.AddIdentity<IdentityUser, IdentityRole>()
-       .AddRoles<IdentityRole>()
-       .AddEntityFrameworkStores<AuthContext>()
-       .AddDefaultTokenProviders();
+builder.AddNpgsqlDbContext<SandboxContext>(connectionName: "WeatherDb", options =>
+                                                                        {
+                                                                            options.DisableMetrics = false;
+                                                                            options.DisableTracing = false;
+                                                                        });
+
 builder.Services.AddAuthentication(options =>
                                    {
                                        options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -83,12 +74,10 @@ builder.Services.AddAuthentication(options =>
                                                                  ValidIssuer              = "SandboxApi",
                                                                  ValidAudience            = "SandboxClient",
                                                                  IssuerSigningKey =
-                                                                     new SymmetricSecurityKey(Encoding.UTF8
-                                                                         .GetBytes("zC8vVKxMAraTYlxRI3tXVi17lWv24UZLD081L7hdObY="))
+                                                                     new SymmetricSecurityKey("zC8vVKxMAraTYlxRI3tXVi17lWv24UZLD081L7hdObY="u8.ToArray())
                                                              };
                      });
-builder.Services.AddScoped<ISecretsProvider, SecretsProvider>();
-builder.Services.AddScoped<ITokenService, TokenService>();
+
 builder.Services.AddScoped<IWeatherImport, OpenMeteoImporter>();
 builder.Services.AddHostedService<WeatherDataImporter>();
 builder.Services.AddHttpClient<IWeatherImport, OpenMeteoImporter>();
