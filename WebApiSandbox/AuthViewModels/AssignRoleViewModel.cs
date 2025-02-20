@@ -1,4 +1,4 @@
-namespace WebApiSandboxViewModels;
+namespace AuthViewModels;
 
 public class AssignRoleViewModel
 {

@@ -19,6 +19,7 @@
 
     <ItemGroup>
       <ProjectReference Include="..\AuthDbMigration\AuthDbMigration.csproj" />
+      <ProjectReference Include="..\AuthWebApi\AuthWebApi.csproj" />
       <ProjectReference Include="..\WeatherDbMigrationService\WeatherDbMigrationService.csproj" />
       <ProjectReference Include="..\WebApiSandbox\WebApiSandbox.csproj" />
     </ItemGroup>

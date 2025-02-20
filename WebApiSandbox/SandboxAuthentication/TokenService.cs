@@ -1,7 +1,7 @@
 ﻿using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
-using EfCoreContext;
+using AuthContextNs;
 using Microsoft.IdentityModel.Tokens;
 using SandboxAuthenticationInterfaces;
 
@@ -9,10 +9,10 @@ namespace SandboxAuthentication;
 
 public class TokenService:ITokenService
 {
-    public SandboxContext   Context         { get; }
+    public AuthContext      Context         { get; }
     public ISecretsProvider SecretsProvider { get; }
 
-    public TokenService(SandboxContext context, ISecretsProvider secretsProvider)
+    public TokenService(AuthContext context, ISecretsProvider secretsProvider)
     {
         Context              = context;
         SecretsProvider = secretsProvider;
