@@ -11,7 +11,7 @@ public class AuthController : ControllerBase
 {
     public AuthController(UserManager<IdentityUser> userManager, ITokenService tokenService)
     {
-        _userManager       = userManager;
+        _userManager  = userManager;
         _tokenService = tokenService;
     }
 
@@ -27,20 +27,61 @@ public class AuthController : ControllerBase
 
         return BadRequest(result.Errors);
     }
-    
+
     [HttpPost("login")]
-    public async Task<IActionResult> Login([FromBody] LoginViewModel model)
+    public async Task<ActionResult<SuccessfulLoginViewModel>> Login([FromBody] LoginViewModel model)
     {
         var user = await _userManager.FindByNameAsync(model.Username);
         if (user != null && await _userManager.CheckPasswordAsync(user, model.Password))
         {
-            var roles = await _userManager.GetRolesAsync(user);
-            var token = _tokenService.GenerateToken(user.UserName,roles);
-            return Ok(new { Token = token });
+            var roles        = await _userManager.GetRolesAsync(user);
+            var token        = _tokenService.GenerateToken(user.UserName, roles);
+            var refreshToken = await _tokenService.GenerateRefreshToken(user.UserName);
+
+            return new SuccessfulLoginViewModel { Token = token, RefreshToken = refreshToken };
+        }
+
+        if (user != null)
+        {
+            await _userManager.AccessFailedAsync(user);
         }
 
         return Unauthorized();
     }
+
+    [HttpPost("refresh-token")]
+    public async Task<ActionResult<SuccessfulLoginViewModel>> RefreshToken([FromBody] RefreshTokenViewModel model)
+    {
+        var userName = _tokenService.GetPrincipalFromExpiredToken(model.Token).Identity?.Name;
+        var user= await _userManager.FindByNameAsync(userName);
+        if (user != null)
+        {
+            var roles        = await _userManager.GetRolesAsync(user);
+            var token        = _tokenService.GenerateToken(user.UserName, roles);
+            var refreshToken = await _tokenService.GenerateRefreshToken(user.UserName);
+            
+            return new SuccessfulLoginViewModel
+                   {
+                       Token = token, RefreshToken = refreshToken
+                   };
+        }
+
+        return Unauthorized();
+    }
+
+    [HttpPost("logout")]
+    public async Task<IActionResult> Logout([FromBody] RefreshTokenViewModel model)
+    {
+        var user = await _userManager.FindByLoginAsync("AuthWebApi", model.RefreshToken);
+        if (user != null)
+        {
+            await _userManager.RemoveLoginAsync(user, "AuthWebApi", model.RefreshToken);
+            return Ok();
+        }
+
+        return NotFound();
+    }
+
     [HttpPost("assign-role")]
     public async Task<IActionResult> AssignRole([FromBody] AssignRoleViewModel model)
     {
@@ -52,11 +93,13 @@ public class AuthController : ControllerBase
             {
                 return Ok();
             }
+
             return BadRequest(result.Errors);
         }
+
         return NotFound();
     }
-    
+
     private readonly UserManager<IdentityUser> _userManager;
     private readonly ITokenService             _tokenService;
 }

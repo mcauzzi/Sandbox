@@ -13,7 +13,8 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\AuthContext\AuthContext.csproj" />
+      <ProjectReference Include="..\AuthContextEfCore\AuthContextEfCore.csproj" />
+      <ProjectReference Include="..\AuthModels\AuthModels.csproj" />
       <ProjectReference Include="..\SandboxAspireServiceDefaults\SandboxAspireServiceDefaults.csproj" />
     </ItemGroup>
 </Project>

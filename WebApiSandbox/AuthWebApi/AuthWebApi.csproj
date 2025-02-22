@@ -12,7 +12,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\AuthContext\AuthContext.csproj" />
+      <ProjectReference Include="..\AuthContextEfCore\AuthContextEfCore.csproj" />
       <ProjectReference Include="..\AuthViewModels\AuthViewModels.csproj" />
       <ProjectReference Include="..\SandboxAspireServiceDefaults\SandboxAspireServiceDefaults.csproj" />
       <ProjectReference Include="..\SandboxAuthenticationInterfaces\SandboxAuthenticationInterfaces.csproj" />

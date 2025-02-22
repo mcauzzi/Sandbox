@@ -11,7 +11,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\AuthContext\AuthContext.csproj" />
+      <ProjectReference Include="..\AuthContextEfCore\AuthContextEfCore.csproj" />
       <ProjectReference Include="..\SandboxAuthenticationInterfaces\SandboxAuthenticationInterfaces.csproj" />
       <ProjectReference Include="..\SandboxConfigurations\SandboxConfigurations.csproj" />
     </ItemGroup>
