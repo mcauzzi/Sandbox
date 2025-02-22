@@ -1,10 +1,10 @@
 @WebApiSandbox_HostAddress = https://localhost:7031
-@authToken = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJBZG1pbiIsImp0aSI6IjllM2Y5M2U5LTRjZTMtNGFmMy05ZTg5LTZmMDk1MmJmY2Q1ZSIsImh0dHA6Ly9zY2hlbWFzLm1pY3Jvc29mdC5jb20vd3MvMjAwOC8wNi9pZGVudGl0eS9jbGFpbXMvcm9sZSI6WyJBZG1pbnMiLCJVc2VycyJdLCJleHAiOjE3NDAwODU2NzMsImlzcyI6IlNhbmRib3hBcGkiLCJhdWQiOiJTYW5kYm94Q2xpZW50In0.gTiwCvLSZsLSM79hn2qd-6b5-Mmh_6_zbg0s74K0-GA
+@authToken =eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJBZG1pbiIsImp0aSI6ImJmYWU1NTcxLWY4MzctNGFlOC1iMmU5LTk4MWE1ODdhZDI3ZiIsImh0dHA6Ly9zY2hlbWFzLm1pY3Jvc29mdC5jb20vd3MvMjAwOC8wNi9pZGVudGl0eS9jbGFpbXMvcm9sZSI6WyJBZG1pbnMiLCJVc2VycyJdLCJleHAiOjE3NDAwODc3OTQsImlzcyI6IlNhbmRib3hBcGkiLCJhdWQiOiJTYW5kYm94Q2xpZW50In0.ggSMV1l0MYXX7o6JMbOEdTU6C6RyjbzgK-35brsB_H4
 GET {{WebApiSandbox_HostAddress}}/weatherforecast?rows=10&offset=0
 Authorization: Bearer {{authToken}}
 Accept: text/plain
 
 ###
-GET {{WebApiSandbox_HostAddress}}/weatherforecast/city?cityId=1&rows=1000&offset=0
+GET {{WebApiSandbox_HostAddress}}/weatherforecast/city?cityId=5&rows=1000&offset=0
 Authorization: Bearer {{authToken}}
 Accept: text/plain

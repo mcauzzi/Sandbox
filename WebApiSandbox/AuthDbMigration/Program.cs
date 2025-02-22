@@ -1,4 +1,4 @@
-using AuthContextNs;
+using AuthContextEfCore;
 using AuthDbMigration;
 using Microsoft.AspNetCore.Identity;
 using SandboxAspireServiceDefaults;

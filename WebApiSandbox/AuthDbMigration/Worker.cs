@@ -1,5 +1,5 @@
 using System.Diagnostics;
-using AuthContextNs;
+using AuthContextEfCore;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
