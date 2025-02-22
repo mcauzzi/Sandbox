@@ -11,6 +11,7 @@ public class WeatherForecastConfiguration : IEntityTypeConfiguration<WeatherFore
         builder.HasKey(e => e.Id);
         builder.HasIndex(e => new { e.Date, e.CityId }).IsUnique();
         builder.HasIndex(e=>e.CityId);
+        builder.HasOne<City>(x=>x.City).WithMany(x=>x.WeatherForecasts).HasForeignKey(x=>x.CityId);
         builder.Property(e => e.Summary).HasConversion(
             v => v.ToString(),
             v => (WeatherWmoCode)Enum.Parse(typeof(WeatherWmoCode), v));
