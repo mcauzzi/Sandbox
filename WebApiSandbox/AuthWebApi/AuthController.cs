@@ -72,10 +72,11 @@ public class AuthController : ControllerBase
     [HttpPost("logout")]
     public async Task<IActionResult> Logout([FromBody] RefreshTokenViewModel model)
     {
-        var user = await _userManager.FindByLoginAsync("AuthWebApi", model.RefreshToken);
+        var userName= _tokenService.GetPrincipalFromExpiredToken(model.Token).Identity?.Name;
+        var user = await _userManager.FindByNameAsync(userName);
         if (user != null)
         {
-            await _userManager.RemoveLoginAsync(user, "AuthWebApi", model.RefreshToken);
+            await _tokenService.DeleteRefreshToken(user.UserName);
             return Ok();
         }
 

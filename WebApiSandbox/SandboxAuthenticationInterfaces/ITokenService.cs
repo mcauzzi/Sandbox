@@ -4,7 +4,8 @@ namespace SandboxAuthenticationInterfaces;
 
 public interface ITokenService
 {
-    public string       GenerateToken(string        username, IList<string> roles);
-    public Task<string> GenerateRefreshToken(string username);
-    ClaimsPrincipal GetPrincipalFromExpiredToken(string accessToken);
+    public string       GenerateToken(string                userName, IList<string> roles);
+    public Task<string> GenerateRefreshToken(string         userName);
+    ClaimsPrincipal     GetPrincipalFromExpiredToken(string accessToken);
+    Task                DeleteRefreshToken(string?          userName);
 }
