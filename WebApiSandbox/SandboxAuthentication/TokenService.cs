@@ -20,11 +20,11 @@ public class TokenService:ITokenService
         SecretsProvider = secretsProvider;
     }
     
-    public string GenerateToken(string username, IList<string> roles)
+    public string GenerateToken(string userName, IList<string> roles)
     {
         var claims = new List<Claim>
                      {
-                         new(ClaimTypes.Name, username),
+                         new(ClaimTypes.Name, userName),
                          new(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
                      };
         claims.AddRange(roles.Select(role => new Claim(ClaimTypes.Role, role)));
@@ -38,7 +38,7 @@ public class TokenService:ITokenService
         return new JwtSecurityTokenHandler().WriteToken(token);
     }
     
-    public async Task<string> GenerateRefreshToken(string username)
+    public async Task<string> GenerateRefreshToken(string userName)
     {
         // Create a 32-byte array to hold cryptographically secure random bytes
         var randomNumber = new byte[32];
@@ -52,9 +52,9 @@ public class TokenService:ITokenService
                                   {
                                       Expiration = DateTime.UtcNow.AddSeconds(3600),
                                       Token      = refreshToken,
-                                      User       = username
+                                      User       = userName
                                   });
-        await Context.RefreshTokens.Where(x => x.User == username).ExecuteDeleteAsync();
+        await Context.RefreshTokens.Where(x => x.User == userName).ExecuteDeleteAsync();
         await Context.SaveChangesAsync();
         // Convert the random bytes to a base64 encoded string 
         return refreshToken;
@@ -93,5 +93,10 @@ public class TokenService:ITokenService
 
         // return the principal
         return principal;
+    }
+
+    public async Task DeleteRefreshToken(string? userName)
+    {
+        await Context.RefreshTokens.Where(x => x.User == userName).ExecuteDeleteAsync();
     }
 }
