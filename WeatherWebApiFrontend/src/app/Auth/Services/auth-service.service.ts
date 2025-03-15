@@ -23,4 +23,7 @@ export class AuthService {
     localStorage.removeItem('refreshToken');
     this.Client.post(`${environment.baseAuthUrl}/logout`,{});
   }
+  public get isLoggedIn(){
+    return localStorage.getItem('token') !== null;
+  }
 }

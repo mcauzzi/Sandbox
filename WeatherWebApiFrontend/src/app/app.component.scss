@@ -1,0 +1,17 @@
+#header{
+    height: 5%;
+    background-color: blue;
+}
+
+#mainBody{
+    height: 95%;
+    display: flex;
+    #sideMenu{
+     
+        height: 100%;
+    }
+    #content{
+       
+        width: 80%;
+    }
+}
