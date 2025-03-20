@@ -1,0 +1,106 @@
+.login-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background: linear-gradient(135deg, #6a82fb 0%, #fc5c7d 100%);
+    padding: 1rem;
+}
+
+:host ::ng-deep .login-card {
+    width: 100%;
+    max-width: 400px;
+    border-radius: 12px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+    overflow: hidden;
+
+    .p-card-header {
+        padding: 0;
+    }
+
+    .p-card-body {
+        padding: 2rem;
+    }
+
+    .p-card-footer {
+        padding: 1rem 2rem;
+        background-color: #f8f9fa;
+        border-top: 1px solid #e9ecef;
+    }
+}
+
+.login-header {
+    background: linear-gradient(45deg, #4a6cf7, #25317b);
+    color: white;
+    text-align: center;
+    padding: 2rem 1rem;
+
+    h1 {
+        margin: 0;
+        font-size: 1.8rem;
+        font-weight: 600;
+    }
+
+    p {
+        margin: 0.5rem 0 0 0;
+        opacity: 0.9;
+    }
+}
+
+.form-group {
+    margin-bottom: 1.5rem;
+
+    label {
+        display: block;
+        margin-bottom: 0.5rem;
+        font-weight: 500;
+        color: #495057;
+    }
+}
+
+.remember-forgot {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 1rem 0 1.5rem;
+    font-size: 0.875rem;
+
+    .remember {
+        display: flex;
+        align-items: center;
+        
+        input {
+            margin-right: 0.5rem;
+        }
+    }
+
+    .forgot-link {
+        color: #4a6cf7;
+        text-decoration: none;
+        transition: color 0.2s;
+
+        &:hover {
+            color: #25317b;
+            text-decoration: underline;
+        }
+    }
+}
+
+.login-button-container {
+    margin-bottom: 0.5rem;
+}
+
+.login-footer {
+    text-align: center;
+    color: #6c757d;
+    
+    a {
+        color: #4a6cf7;
+        text-decoration: none;
+        font-weight: 500;
+        
+        &:hover {
+            text-decoration: underline;
+        }
+    }
+}
