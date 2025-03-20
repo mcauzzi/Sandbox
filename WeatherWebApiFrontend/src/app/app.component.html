@@ -1,11 +1,11 @@
 <div id="header"></div>
 <div id="mainBody">
-  <div id="sideMenu" [ngStyle]="menuPanel.collapsed ? {'width': '10%'} : {'width': '20%'}">
-    <p-panel #menuPanel header="Main Menu" [toggleable]="true"
-      ><p-menu [model]="routingItems" />
+  <div id="sideMenu" [ngClass]="menuPanel.collapsed ? 'sideMenu sideMenu-collapsed' :'sideMenu sideMenu-expanded'">
+    <p-panel #menuPanel ngClass="menuPanel" header="Main Menu" [toggleable]="true"  
+      ><p-menu  [model]="routingItems"/>
     </p-panel>
   </div>
-  <div id="content">
+  <div id="content" [ngClass]="menuPanel.collapsed ? 'content-extended' :'content-collapsed'">
     <div *ngIf="!isLoggedIn; else LoggedInBlock">
       <app-login></app-login>
     </div>

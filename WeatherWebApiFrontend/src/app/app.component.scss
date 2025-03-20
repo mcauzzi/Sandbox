@@ -6,12 +6,19 @@
 #mainBody{
     height: 95%;
     display: flex;
-    #sideMenu{
-     
-        height: 100%;
+    .sideMenu-collapsed{
+       width: 20%;
     }
-    #content{
-       
+    .sideMenu{
+        background: var(--p-panel-background);
+    }
+    .sideMenu-expanded{
+        width: 30%;
+    }
+    .content-extended{
+        width: 90%;
+    }
+    .content-collapsed{
         width: 80%;
     }
 }
