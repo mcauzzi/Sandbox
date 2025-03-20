@@ -53,6 +53,7 @@ app.UseHttpsRedirection();
 app.UseAuthentication();
 app.UseAuthorization();
 app.MapControllers();
+app.UseCors(x=>x.WithOrigins("http://localhost:4200").AllowAnyMethod().AllowAnyHeader());
 var summaries = new[]
                 {
                     "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering",

@@ -1,4 +1,8 @@
 /* You can add global styles to this file, and also import other style files */
+// PrimeNG Theme and Icons
+
+@import "primeicons/primeicons.css";
+
 html,
 body {
   margin: 0;
@@ -9,4 +13,9 @@ body {
   -moz-osx-font-smoothing: grayscale;
   background: light-dark(var(--p-surface-0), var(--p-surface-950));
   height: 100%;
+}
+
+// Global utility classes
+.w-full {
+  width: 100%;
 }

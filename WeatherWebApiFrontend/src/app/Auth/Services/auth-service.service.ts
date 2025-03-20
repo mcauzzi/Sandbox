@@ -12,7 +12,7 @@ export class AuthService {
   constructor(public Client:HttpClient) {}
 
   public login(userName:string,password:string){
-     return this.Client.post<LoginResponseViewModel>(`${environment.baseAuthUrl}/login`,{username:userName,password:password}).pipe(map((res:LoginResponseViewModel)=>{
+     return this.Client.post<LoginResponseViewModel>(`${environment.baseAuthUrl}/auth/login`,{username:userName,password:password}).pipe(map((res:LoginResponseViewModel)=>{
         localStorage.setItem('token',res.token);
         localStorage.setItem('refreshToken',res.refreshToken);
      }));

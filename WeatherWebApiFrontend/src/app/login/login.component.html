@@ -1,1 +1,57 @@
-<p>login works!</p>
+<div class="login-container">
+    <p-toast></p-toast>
+    <p-card styleClass="login-card">
+        <ng-template pTemplate="header">
+            <div class="login-header">
+                <h1>Welcome</h1>
+                <p>Sign in to your account</p>
+            </div>
+        </ng-template>
+        
+        <div class="form-group">
+            <label for="username">Username</label>
+            <span class="p-input-icon-left w-full">
+                <i class="pi pi-user"></i>
+                <input 
+                    id="username" 
+                    type="text" 
+                    pInputText 
+                    [(ngModel)]="username" 
+                    placeholder="Enter your username"
+                    class="w-full">
+            </span>
+            <label for="password">Password</label>
+            <p-password 
+                id="password" 
+                [(ngModel)]="password" 
+                placeholder="Enter your password"
+                [feedback]="false"
+                [toggleMask]="true"
+                inputStyleClass="w-full">
+            </p-password>
+        </div>
+        
+        <div class="form-group">
+
+        </div>
+
+        <div class="remember-forgot">
+            <div class="remember">
+                <input type="checkbox" id="remember" />
+                <label for="remember">Remember me</label>
+            </div>
+            <a href="#" class="forgot-link">Forgot password?</a>
+        </div>
+        
+        <div class="login-button-container">
+            <p-button 
+                label="Log In" 
+                icon="pi pi-sign-in" 
+                [loading]="isLoading"
+                styleClass="w-full" 
+                (onClick)="login()">
+            </p-button>
+        </div>
+    
+    </p-card>
+</div>
