@@ -4,8 +4,11 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 using Models;
+using Models.Views;
 using SandboxRemoteApisImportersInterfaces;
+using WebApiSandboxViewModels;
 
 namespace SandboxServices;
 
@@ -14,7 +17,7 @@ public class WeatherDataImporter : BackgroundService
     private readonly        ILogger<WeatherDataImporter> _logger;
     private readonly        IServiceProvider             _serviceProvider;
     private static readonly ActivitySource               s_activitySource   = new("WeatherDataImporter");
-    public WeatherDataImporter(ILogger<WeatherDataImporter> logger, IServiceProvider serviceProvider)
+    public WeatherDataImporter(ILogger<WeatherDataImporter> logger, IServiceProvider serviceProvider,IOptions<>)
     {
         _logger          = logger;
         _serviceProvider = serviceProvider;
@@ -37,15 +40,8 @@ public class WeatherDataImporter : BackgroundService
                 using var importActivity=s_activitySource.StartActivity("Importing weather data");
                 try
                 {
-                    var startDate = DateOnly.FromDateTime(DateTime.Now).AddDays(-Random.Shared.Next(365*60));
-                    var days      = Random.Shared.Next(30);
-                    var randomCity = await dbContext.RandomCityViews
-                                                    .FirstOrDefaultAsync(stoppingToken);
-                    var roundedLatitude  = Math.Round(randomCity.Latitude,  4);
-                    var roundedLongitude = Math.Round(randomCity.Longitude, 4);
-                    var forecasts = await api.GetForecasts(roundedLatitude, roundedLongitude,
-                                                           startDate, days, stoppingToken);
-                    using var importDbActivity=s_activitySource.StartActivity("Saving forecasts to db", ActivityKind.Producer);
+                    var    forecasts        = await GetForecastFromApi(api,stoppingToken);
+                    using var importDbActivity =s_activitySource.StartActivity("Saving forecasts to db", ActivityKind.Producer);
                     if (Random.Shared.Next(10) == 1)
                     {
                         _logger.LogInformation("Refreshing materialized view {MaterializedView}", "RandomCityView");
@@ -72,5 +68,11 @@ public class WeatherDataImporter : BackgroundService
 
             await Task.Delay(10000, stoppingToken);
         }
+    }
+
+    private static async Task<List<ForecastViewModel>> GetForecastFromApi(IWeatherImport    api,CancellationToken stoppingToken)
+    {
+        var forecasts = await api.GetForecasts(stoppingToken);
+        return forecasts;
     }
 }

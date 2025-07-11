@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Models;
-using Models.Views;
 
 namespace EfCoreContext;
 
@@ -21,7 +20,6 @@ public class SandboxContext : DbContext
     public DbSet<City>            Cities           { get; set; }
     public DbSet<State>           States           { get; set; }
     public DbSet<Country>         Countries        { get; set; }
-    public DbSet<RandomCityView>  RandomCityViews  { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
@@ -39,6 +37,5 @@ public class SandboxContext : DbContext
         modelBuilder.ApplyConfiguration(new CityConfiguration());
         modelBuilder.ApplyConfiguration(new StateConfiguration());
         modelBuilder.ApplyConfiguration(new CountryConfiguration());
-        modelBuilder.ApplyConfiguration(new RandomCityViewConfiguration());
     }
 }

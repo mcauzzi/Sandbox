@@ -8,11 +8,11 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="Aspire.Npgsql.EntityFrameworkCore.PostgreSQL" Version="9.0.0" />
-        <PackageReference Include="Aspire.StackExchange.Redis" Version="9.0.0" />
-        <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="9.0.0" />
-        <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="9.0.0" />
-        <PackageReference Include="Swashbuckle.AspNetCore" Version="7.2.0" />
+        <PackageReference Include="Aspire.Npgsql.EntityFrameworkCore.PostgreSQL" Version="9.3.1" />
+        <PackageReference Include="Aspire.StackExchange.Redis" Version="9.3.1" />
+        <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="9.0.7" />
+        <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="9.0.7" />
+        <PackageReference Include="Swashbuckle.AspNetCore" Version="9.0.3" />
     </ItemGroup>
 
     <ItemGroup>
@@ -23,6 +23,7 @@
         <ProjectReference Include="..\SandboxRemoteApisImportersInterfaces\SandboxRemoteApisImportersInterfaces.csproj" />
         <ProjectReference Include="..\SandboxRemoteApisImporters\SandboxRemoteApisImporters.csproj" />
         <ProjectReference Include="..\SandboxServices\SandboxServices.csproj" />
+        <ProjectReference Include="..\WeatherImportConfigs\WeatherImportConfigs.csproj" />
         <ProjectReference Include="..\WebApiSandboxControllers\WebApiSandboxControllers.csproj" />
         <ProjectReference Include="..\WebApiSandboxRepositories\WebApiSandboxRepositories.csproj" />
     </ItemGroup>

@@ -4,15 +4,15 @@ using System.Net.Http.Json;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Models;
-using SandboxConfigurations;
 using SandboxRemoteApisImportersInterfaces;
+using WeatherImportConfigs;
 using WebApiSandboxViewModels;
 
 namespace SandboxRemoteApisImporters;
 
-public class OpenMeteoImporter : IWeatherImport
+public class OpenMeteoHistoricalImporter : IWeatherImport
 {
-    public OpenMeteoImporter(ILogger<OpenMeteoImporter>        logger, HttpClient httpClient,
+    public OpenMeteoHistoricalImporter(ILogger<OpenMeteoHistoricalImporter>        logger, HttpClient httpClient,
                              IOptions<OpenMeteoImporterConfig> config)
     {
         Logger     = logger;
@@ -22,22 +22,32 @@ public class OpenMeteoImporter : IWeatherImport
 
     public OpenMeteoImporterConfig Config { get; set; }
 
-    public async Task<List<ForecastViewModel>> GetForecasts(decimal latitude,     decimal longitude, DateOnly endDate,
-                                                            int     numberOfDays, CancellationToken ct)
+    public async Task<List<ForecastViewModel>> GetForecasts( CancellationToken ct)
     {
-        using var activity=ActivitySrc.StartActivity("GetForecasts", ActivityKind.Client);
+        using var activity =ActivitySrc.StartActivity("GetForecasts", ActivityKind.Client);
+        var       startDate = DateTime.Parse(Config.StartDate);
         var req = new HttpRequestMessage(HttpMethod.Get,
-                                         $"{Config.BaseUrl}/archive?latitude={latitude.ToString(CultureInfo.InvariantCulture)}&longitude={longitude.ToString(CultureInfo.InvariantCulture)}&start_date={endDate.AddDays(-numberOfDays).ToString("yyyy-MM-dd")}&end_date={endDate.ToString("yyyy-MM-dd")}&daily=weather_code,temperature_2m_max,temperature_2m_min");
+                                         $"archive?latitude={Config.Latitude}"
+                                       + $"&longitude={Config.Longitude.ToString(CultureInfo.InvariantCulture)}"
+                                       + $"&start_date={startDate.ToString(CultureInfo.InvariantCulture)}"
+                                       + $"&end_date={startDate.AddDays(Config.DaysPerRequest).ToString(CultureInfo.InvariantCulture)}"
+                                       + $"&hourly=weather_code,temperature_2m_max,temperature_2m_min");
         req.Headers.Add("Accept", "application/json");
         var response       = await HttpClient.SendAsync(req, ct);
         var mappedResponse = await response.Content.ReadFromJsonAsync<ApiResponse>(cancellationToken: ct);
 
         return mappedResponse.daily.time.Select((t, i) => new ForecastViewModel
                                                           {
-                                                              Date = DateOnly.Parse(t),
+                                                              Date = DateTime.Parse(t),
                                                               Summary =
                                                                   ((WeatherWmoCode)(mappedResponse.daily
                                                                           .weather_code[i]??-1)).ToString(),
+                                                              TemperatureMax=
+                                                                  Convert.ToDecimal(mappedResponse.daily
+                                                                      .temperature_2m_max[i]??-999),
+                                                              TemperatureMin =
+                                                                  Convert.ToDecimal(mappedResponse.daily
+                                                                      .temperature_2m_min[i]??-999), 
                                                               Temperature =
                                                                   Convert.ToDecimal(mappedResponse.daily
                                                                       .temperature_2m_max[i]??-999)
@@ -45,7 +55,7 @@ public class OpenMeteoImporter : IWeatherImport
                              .ToList();
     }
 
-    public ILogger<OpenMeteoImporter> Logger     { get; }
+    public ILogger<OpenMeteoHistoricalImporter> Logger     { get; }
     public ActivitySource            ActivitySrc=new("OpenMeteoImporter");
     public HttpClient                 HttpClient { get; }
 }

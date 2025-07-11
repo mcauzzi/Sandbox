@@ -58,7 +58,7 @@ public class ForecastRepository(SandboxContext context,IConnectionMultiplexer co
 
     }
 
-    public async Task<IEnumerable<ForecastViewModel>> GetByDate(DateOnly date, int rows, int offset)
+    public async Task<IEnumerable<ForecastViewModel>> GetByDate(DateTime date, int rows, int offset)
     {
         return await Context.WeatherForecasts
                             .Where(x=>x.Date==date)

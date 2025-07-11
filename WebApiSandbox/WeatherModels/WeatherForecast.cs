@@ -6,11 +6,12 @@ namespace Models;
 public class WeatherForecast
 {
     public long Id { get; set; }
-    public DateOnly Date { get; set; }
+    public DateTime Date { get; set; }
     public decimal TemperatureC { get; set; }
     public WeatherWmoCode Summary { get; set; }
     public int CityId { get; set; }
     public City? City { get; set; }
+    public string Source { get; set; }
 }
 
 public enum WeatherWmoCode

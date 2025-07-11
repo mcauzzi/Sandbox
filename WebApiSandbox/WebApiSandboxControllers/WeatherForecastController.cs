@@ -31,7 +31,7 @@ public class WeatherForecastController:Controller
     }
     
     [HttpGet("date")]
-    public async Task<IEnumerable<ForecastViewModel>> GetByDate(DateOnly date,[FromQuery]int rows, [FromQuery]int offset)
+    public async Task<IEnumerable<ForecastViewModel>> GetByDate(DateTime date,[FromQuery]int rows, [FromQuery]int offset)
     {
         return await Repository.GetByDate(date, rows, offset);
     }
