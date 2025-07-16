@@ -22,41 +22,14 @@ public class ForecastRepository(SandboxContext context,IConnectionMultiplexer co
                       .Take(rows)
                       .Select(wf => new ForecastViewModel
                       {
-                          CityName    = wf.City.Name,
-                          StateName   = wf.City.State.Name,
-                          CountryName = wf.City.State.Country.Name,
+                          Latitude   = wf.Latitude,
+                          Longitude  = wf.Longitude,
                           Summary     = wf.Summary.ToString(),
                           Temperature = wf.TemperatureC,
                           Date        = wf.Date
                       }).ToListAsync();
     }
-
-    public async Task<IEnumerable<ForecastViewModel>> GetByCity(int cityId, int rows, int offset)
-    {
-        var cachedVal = await Redis.StringGetAsync($"{cityId}|{rows}|{offset}");
-        if(cachedVal.HasValue)
-        {
-           return JsonSerializer.Deserialize<IEnumerable<ForecastViewModel>>(cachedVal);
-        }
-
-        var dbRes= await Context.WeatherForecasts
-                                .Where(x=>x.CityId==cityId)
-                                .OrderBy(x=>x.Id)
-                                .Skip(offset)
-                                .Take(rows)
-                                .Select(wf => new ForecastViewModel
-                                              {
-                                                  CityName    = wf.City.Name,
-                                                  StateName   = wf.City.State.Name,
-                                                  CountryName = wf.City.State.Country.Name,
-                                                  Summary     = wf.Summary.ToString(),
-                                                  Temperature = wf.TemperatureC,
-                                                  Date        = wf.Date
-                                              }).ToListAsync();
-        await Redis.StringSetAsync($"{cityId}|{rows}|{offset}",JsonSerializer.Serialize(dbRes),TimeSpan.FromMinutes(5));
-        return dbRes;
-
-    }
+    
 
     public async Task<IEnumerable<ForecastViewModel>> GetByDate(DateTime date, int rows, int offset)
     {
@@ -67,9 +40,6 @@ public class ForecastRepository(SandboxContext context,IConnectionMultiplexer co
                             .Take(rows)
                             .Select(wf => new ForecastViewModel
                                           {
-                                              CityName    = wf.City.Name,
-                                              StateName   = wf.City.State.Name,
-                                              CountryName = wf.City.State.Country.Name,
                                               Summary     = wf.Summary.ToString(),
                                               Temperature = wf.TemperatureC,
                                               Date        = wf.Date
@@ -85,9 +55,6 @@ public class ForecastRepository(SandboxContext context,IConnectionMultiplexer co
                             .Take(rows)
                             .Select(wf => new ForecastViewModel
                                           {
-                                              CityName    = wf.City.Name,
-                                              StateName   = wf.City.State.Name,
-                                              CountryName = wf.City.State.Country.Name,
                                               Summary     = wf.Summary.ToString(),
                                               Temperature = wf.TemperatureC,
                                               Date        = wf.Date
@@ -96,17 +63,10 @@ public class ForecastRepository(SandboxContext context,IConnectionMultiplexer co
     
     public async Task Add(ForecastViewModel forecast)
     {
-        var city = await Context.Cities
-                               .Include(x=>x.State)
-                               .ThenInclude(x=>x.Country)
-                               .FirstOrDefaultAsync(x => x.Name == forecast.CityName);
-        if (city == null)
+        await Context.WeatherForecasts.AddAsync(new WeatherData
         {
-            throw new NotFoundException(nameof(City), forecast.CityName);
-        }
-        await Context.WeatherForecasts.AddAsync(new WeatherForecast
-        {
-            City    = city,
+            Latitude = forecast.Latitude,
+            Longitude = forecast.Longitude,
             Summary = Enum.Parse<WeatherWmoCode>(forecast.Summary),
             TemperatureC = forecast.Temperature,
             Date    = forecast.Date

@@ -13,7 +13,7 @@ public static class ServiceCollectionExtensions
         foreach (var section in openMeteoSections.Get<List<OpenMeteoImporterConfig>>())
         {
             services.Configure<OpenMeteoImporterConfig>(openMeteoSections);
-            services.AddHostedService<WeatherDataImporter>();
+            services.AddHostedService<WeatherDataApiImporter>();
             services.AddHttpClient<IWeatherImport, OpenMeteoHistoricalImporter>(x=>x.BaseAddress= new Uri("https://api.open-meteo.com/v1/"));
         }
         

@@ -4,16 +4,18 @@ using Models;
 
 namespace EfCoreContext.Configurations;
 
-public class WeatherForecastConfiguration : IEntityTypeConfiguration<WeatherForecast>
+public class WeatherForecastConfiguration : IEntityTypeConfiguration<WeatherData>
 {
-    public void Configure(EntityTypeBuilder<WeatherForecast> builder)
+    public void Configure(EntityTypeBuilder<WeatherData> builder)
     {
         builder.HasKey(e => e.Id);
         builder.HasIndex(e => new { e.Date, e.CityId }).IsUnique();
         builder.HasIndex(e=>e.CityId);
-        builder.HasOne<City>(x=>x.City).WithMany(x=>x.WeatherForecasts).HasForeignKey(x=>x.CityId);
+        builder.HasIndex(x => x.Latitude);
+        builder.HasIndex(x => x.Longitude);
+        builder.HasIndex(x=>new {x.Latitude, x.Longitude});
         builder.Property(e => e.Summary).HasConversion(
             v => v.ToString(),
-            v => (WeatherWmoCode)Enum.Parse(typeof(WeatherWmoCode), v));
+            v => Enum.Parse<WeatherWmoCode>(v));
     }
 }

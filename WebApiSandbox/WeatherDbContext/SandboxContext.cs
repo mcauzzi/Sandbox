@@ -16,7 +16,7 @@ public class SandboxContext : DbContext
     {
     }
 
-    public DbSet<WeatherForecast> WeatherForecasts { get; set; }
+    public DbSet<WeatherData> WeatherForecasts { get; set; }
     public DbSet<City>            Cities           { get; set; }
     public DbSet<State>           States           { get; set; }
     public DbSet<Country>         Countries        { get; set; }
