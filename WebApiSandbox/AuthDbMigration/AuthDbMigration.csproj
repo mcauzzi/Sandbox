@@ -1,15 +1,15 @@
 <Project Sdk="Microsoft.NET.Sdk.Worker">
 
     <PropertyGroup>
-        <TargetFramework>net9.0</TargetFramework>
+        <TargetFramework>net10.0</TargetFramework>
         <Nullable>enable</Nullable>
         <ImplicitUsings>enable</ImplicitUsings>
         <UserSecretsId>dotnet-AuthDbMigration-3f37e246-ddc8-4014-8191-f8376f806cec</UserSecretsId>
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="Aspire.Npgsql.EntityFrameworkCore.PostgreSQL" Version="9.3.1" />
-        <PackageReference Include="Microsoft.Extensions.Hosting" Version="9.0.7" />
+        <PackageReference Include="Aspire.Npgsql.EntityFrameworkCore.PostgreSQL" Version="9.5.2" />
+        <PackageReference Include="Microsoft.Extensions.Hosting" Version="10.0.0" />
     </ItemGroup>
 
     <ItemGroup>

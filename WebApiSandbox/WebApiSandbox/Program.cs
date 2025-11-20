@@ -1,7 +1,7 @@
 using EfCoreContext;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
-using Microsoft.OpenApi.Models;
+using Microsoft.OpenApi;
 using SandboxAspireServiceDefaults;
 using SandboxConfigurations;
 using SandboxRemoteApisImportersInterfaces;
@@ -30,21 +30,15 @@ builder.Services.AddSwaggerGen(c =>
                                                                          Type   = SecuritySchemeType.ApiKey,
                                                                          Scheme = "Bearer"
                                                                      });
-                                   c.AddSecurityRequirement(new OpenApiSecurityRequirement
-                                                            {
-                                                                {
-                                                                    new OpenApiSecurityScheme
-                                                                    {
-                                                                        Reference = new OpenApiReference
-                                                                            {
-                                                                                Type = ReferenceType
-                                                                                    .SecurityScheme,
-                                                                                Id = "Bearer"
-                                                                            }
-                                                                    },
-                                                                    new string[] { }
-                                                                }
-                                                            });
+                                   c.AddSecurityRequirement(doc => new OpenApiSecurityRequirement
+                                                                   {
+                                                                       {
+                                                                           new
+                                                                               OpenApiSecuritySchemeReference("Bearer",
+                                                                                doc),
+                                                                           []
+                                                                       }
+                                                                   });
                                });
 builder.Services.AddScoped<IForecastsRepository, ForecastRepository>();
 builder.Services.AddControllers()
@@ -75,7 +69,9 @@ builder.Services.AddAuthentication(options =>
                                                                  ValidIssuer              = "SandboxApi",
                                                                  ValidAudience            = "SandboxClient",
                                                                  IssuerSigningKey =
-                                                                     new SymmetricSecurityKey("zC8vVKxMAraTYlxRI3tXVi17lWv24UZLD081L7hdObY="u8.ToArray())
+                                                                     new
+                                                                         SymmetricSecurityKey("zC8vVKxMAraTYlxRI3tXVi17lWv24UZLD081L7hdObY="u8
+                                                                             .ToArray())
                                                              };
                      });
 
