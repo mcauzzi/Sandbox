@@ -7,6 +7,7 @@
     </PropertyGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\WeatherImportConfigs\WeatherImportConfigs.csproj" />
       <ProjectReference Include="..\WebApiSandboxViewModels\WebApiSandboxViewModels.csproj" />
     </ItemGroup>
 

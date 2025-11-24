@@ -10,11 +10,15 @@ public static class ServiceCollectionExtensions
 {
     public static IServiceCollection AddWeatherImporterServices(this IServiceCollection services,IConfigurationSection openMeteoSections)
     {
-        foreach (var section in openMeteoSections.Get<List<OpenMeteoImporterConfig>>())
+        foreach (var section in openMeteoSections.Get<Dictionary<string,IConfigurationSection>>())
         {
-            services.Configure<OpenMeteoImporterConfig>(openMeteoSections);
-            services.AddHostedService<WeatherDataApiImporter>();
-            services.AddHttpClient<IWeatherImport, OpenMeteoHistoricalImporter>(x=>x.BaseAddress= new Uri("https://api.open-meteo.com/v1/"));
+            services.Configure<OpenMeteoImporterConfig>(section.Key,section.Value);
+            services.AddHostedService<WeatherDataApiImporter>(x =>
+                                                              {
+                                                                  var configKey = section.Key;
+                                                                  return ActivatorUtilities.CreateInstance<WeatherDataApiImporter>(x, configKey);
+                                                              });
+            services.AddHttpClient<IWeatherImport, OpenMeteoHistoricalImporter>(x=>x.BaseAddress= new Uri("https://archive-api.open-meteo.com/v1/"));
         }
         
        

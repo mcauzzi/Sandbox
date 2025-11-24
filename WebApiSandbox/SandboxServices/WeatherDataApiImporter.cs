@@ -15,18 +15,15 @@ namespace SandboxServices;
 public class WeatherDataApiImporter : BackgroundService
 {
     private readonly        ILogger<WeatherDataApiImporter> _logger;
-    private readonly        IServiceProvider             _serviceProvider;
-    private static readonly ActivitySource               s_activitySource = new("WeatherDataApiImporter");
+    private readonly        IServiceProvider                _serviceProvider;
+    private static readonly ActivitySource                  s_activitySource = new("WeatherDataApiImporter");
 
-    public WeatherDataApiImporter(ILogger<WeatherDataApiImporter> logger, IServiceProvider serviceProvider, IOptions<OpenMeteoImporterConfig> config)
-        : base()
+    public WeatherDataApiImporter(string key, ILogger<WeatherDataApiImporter> logger, IServiceProvider serviceProvider)
     {
         _logger          = logger;
         _serviceProvider = serviceProvider;
-        Config           = config.Value;
+        ConfigKey        = key;
     }
-
-    private OpenMeteoImporterConfig Config { get; set; }
 
     protected override async Task ExecuteAsync(CancellationToken stoppingToken)
     {
@@ -40,25 +37,35 @@ public class WeatherDataApiImporter : BackgroundService
 
             using (var scope = _serviceProvider.CreateScope())
             {
+                var config = scope.ServiceProvider.GetService<IOptionsSnapshot<OpenMeteoImporterConfig>>()
+                                  .Get(ConfigKey);
                 var       dbContext      = scope.ServiceProvider.GetRequiredService<SandboxContext>();
                 var       api            = scope.ServiceProvider.GetRequiredService<IWeatherImport>();
                 using var importActivity = s_activitySource.StartActivity("Importing weather data");
                 try
                 {
-                    var forecasts = await GetForecastFromApi(api, stoppingToken);
+                    var forecasts = await GetForecastFromApi(api, config, stoppingToken);
                     using var importDbActivity =
                         s_activitySource.StartActivity("Saving Weather Data to db", ActivityKind.Producer);
 
                     await dbContext.WeatherForecasts.AddRangeAsync(forecasts.Select(f => new WeatherData
                                                                        {
-                                                                           Latitude=Config.Latitude,
-                                                                           Longitude=Config.Longitude,
-                                                                               Date= f.Date,
+                                                                           Latitude  = config.Latitude,
+                                                                           Longitude = config.Longitude,
+                                                                           Date =
+                                                                               new DateTime(DateOnly
+                                                                                    .FromDateTime(f
+                                                                                        .Date),
+                                                                                TimeOnly
+                                                                                    .FromDateTime(f
+                                                                                        .Date),
+                                                                                DateTimeKind.Utc),
                                                                            Summary = Enum
                                                                                .Parse<
                                                                                    WeatherWmoCode>(f
                                                                                    .Summary),
-                                                                           TemperatureC = f.Temperature
+                                                                           TemperatureC = f.Temperature,
+                                                                           Source       = "WeatherImport"
                                                                        }), stoppingToken);
                     await dbContext.SaveChangesAsync(stoppingToken);
                 }
@@ -73,9 +80,11 @@ public class WeatherDataApiImporter : BackgroundService
     }
 
     private static async Task<List<ForecastViewModel>> GetForecastFromApi(
-        IWeatherImport api, CancellationToken stoppingToken)
+        IWeatherImport api, OpenMeteoImporterConfig config, CancellationToken stoppingToken)
     {
-        var forecasts = await api.GetForecasts(stoppingToken);
+        var forecasts = await api.GetForecasts(config, stoppingToken);
         return forecasts;
     }
+
+    private string ConfigKey { get; init; }
 }
